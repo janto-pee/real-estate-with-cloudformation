@@ -1,6 +1,8 @@
 import express from "express";
 import {
   accessForgotPassword,
+  addEnqueriedHanlder,
+  addWishlistHanlder,
   createUserHandler,
   forgotPassword,
   getAllUserHandler,
@@ -63,4 +65,6 @@ router.post(
   updateProfile
 );
 router.get("/api/user/getallusers", requireUser, getAllUserHandler);
+router.get("/api/user/wishlist", requireUser, addWishlistHanlder);
+router.get("/api/user/enqueried", requireUser, addEnqueriedHanlder);
 export default router;

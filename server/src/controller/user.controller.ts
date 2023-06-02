@@ -316,7 +316,7 @@ export async function getAllUserHandler(req: Request, res: Response) {
   }
 }
 
-export async function addWishlist(req: Request, res: Response) {
+export async function addWishlistHanlder(req: Request, res: Response) {
   try {
     const userId = res.locals.user._id;
     const { slug } = req.params;
@@ -334,9 +334,34 @@ export async function addWishlist(req: Request, res: Response) {
   }
 }
 
-export async function addEnqueried(req: Request, res: Response) {
+export async function addEnqueriedHanlder(req: Request, res: Response) {
   try {
     const userId = res.locals.user._id;
+    // extract information from from
+    const { title, message, phone, topic, email } = req.body;
+    const clientURL = config.get<string>("CLIENT_URL");
+    const replyTo = config.get<string>("REPLY_TO");
+
+    AWSSES.sendEmail(
+      sendEmail(
+        replyTo,
+        `
+        <p>${title}.</p>
+        ${message}
+        ${topic}-${phone}
+        `,
+        replyTo,
+        "Activate your acount"
+      ),
+      (err, data) => {
+        if (err) {
+          console.log("err");
+        } else {
+          console.log("message sent");
+        }
+      }
+    );
+
     const { slug } = req.params;
     if (!userId) {
       return res.status(400).json({ error: "unauthorised user" });

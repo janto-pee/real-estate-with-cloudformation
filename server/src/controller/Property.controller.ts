@@ -9,6 +9,7 @@ import {
   getPropertyById,
   propertyEnqueried,
   propertyWishlist,
+  searchProperty,
   updateProperty,
 } from "../service/property.service";
 import { findUserById, updateUser } from "../service/user.service";
@@ -127,7 +128,7 @@ export async function propertyWishlistHandler(req: Request, res: Response) {
     let page =
       typeof req.params.page !== "undefined" ? Number(req.params.page) - 1 : 0;
     let limit =
-      typeof req.params.lmino !== "undefined" ? Number(req.params.lmino) : 10;
+      typeof req.params.limit !== "undefined" ? Number(req.params.limit) : 10;
 
     const userId = res.locals.user._id;
     const user = await findUserById(userId);
@@ -158,7 +159,7 @@ export async function propertyEnqueriedHandler(req: Request, res: Response) {
     let page =
       typeof req.params.page !== "undefined" ? Number(req.params.page) - 1 : 0;
     let limit =
-      typeof req.params.lmino !== "undefined" ? Number(req.params.lmino) : 10;
+      typeof req.params.limit !== "undefined" ? Number(req.params.limit) : 10;
 
     const userId = res.locals.user._id;
     const user = await findUserById(userId);
@@ -189,17 +190,13 @@ export async function userPostedHandler(req: Request, res: Response) {
     let page =
       typeof req.params.page !== "undefined" ? Number(req.params.page) - 1 : 0;
     let limit =
-      typeof req.params.lmino !== "undefined" ? Number(req.params.lmino) : 10;
+      typeof req.params.limit !== "undefined" ? Number(req.params.limit) : 10;
 
     const userId = res.locals.user._id;
-    if (!userId){
-      return res.status(400).json({error: "unauthorised "})
+    if (!userId) {
+      return res.status(400).json({ error: "unauthorised " });
     }
-    const userAds = await propertyWishlist(
-      { postedBy: userId},
-      page,
-      limit
-    );
+    const userAds = await propertyWishlist({ postedBy: userId }, page, limit);
     const total = await countUserProperties({ postedby: userId });
     const response = {
       error: false,
@@ -211,5 +208,101 @@ export async function userPostedHandler(req: Request, res: Response) {
     return res.status(200).json(response);
   } catch (error: any) {
     return res.status(400).json({ error: error.message });
+  }
+}
+
+export async function searchHandler(req: Request, res: Response) {
+  try {
+    let page =
+      typeof req.query.page !== "undefined" ? Number(req.query.page) - 1 : 0;
+    let limit =
+      typeof req.query.lmino !== "undefined" ? Number(req.query.lmino) : 10;
+    const { action, address, type, priceRange } = req.query;
+
+    const searchresponse = await searchProperty(
+      {
+        action: action,
+        type: type,
+        location: {
+          $near: {
+            $maxDist: 5000,
+            $geometry: { type: "Point", coordinates: [6000, 3000] },
+          },
+        },
+      },
+      page,
+      limit
+    );
+    const total = await countUserProperties({
+      action: action,
+      type: type,
+      location: {
+        $near: {
+          $maxDist: 5000,
+          $geometry: { type: "Point", coordinates: [6000, 3000] },
+        },
+      },
+    });
+    const response = {
+      error: false,
+      total,
+      "courses displayed": searchresponse.length,
+      page: page + 1,
+      searchresponse,
+    };
+    return res.status(200).json(response);
+  } catch (error: any) {
+    return res.status(400).json({ error: error.message });
+  }
+}
+
+export async function getPropertiesForSaleHandler(req: Request, res: Response) {
+  try {
+    let page =
+      typeof req.query.page !== "undefined" ? Number(req.query.page) - 1 : 0;
+    let limit =
+      typeof req.query.lmino !== "undefined" ? Number(req.query.lmino) : 10;
+
+    let propertyForSale = await getPropertyByAction("sale", page, limit);
+    const total = await countProperties();
+
+    propertyForSale.length > 15
+      ? propertyForSale.filter((item, index: number) => index < 15)
+      : propertyForSale;
+
+    const response = {
+      error: false,
+      total,
+      page: page + 1,
+      propertyForSale,
+    };
+    return res.status(200).send(response);
+  } catch (error) {
+    return res.status(400).json({ error: error });
+  }
+}
+export async function getPropertiesForRentHandler(req: Request, res: Response) {
+  try {
+    let page =
+      typeof req.query.page !== "undefined" ? Number(req.query.page) - 1 : 0;
+    let limit =
+      typeof req.query.lmino !== "undefined" ? Number(req.query.lmino) : 10;
+
+    let propertyForRent = await getPropertyByAction("rent", page, limit);
+    const total = await countProperties();
+
+    propertyForRent.length > 15
+      ? propertyForRent.filter((item, index: number) => index < 15)
+      : propertyForRent;
+
+    const response = {
+      error: false,
+      total,
+      page: page + 1,
+      propertyForRent,
+    };
+    return res.status(200).send(response);
+  } catch (error) {
+    return res.status(400).json({ error: error });
   }
 }

@@ -29,10 +29,5 @@ export const allUser = async () => {
   return await UserModel.find();
 };
 
-// export async function getAllUsers(page: number, limit: number) {
-//   const Users = await UserModel.find()
-//     .skip(page * limit)
-//     .limit(limit);
-//   return Users;
-// }
+
 

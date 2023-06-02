@@ -90,3 +90,14 @@ export async function propertyEnqueried(
     .skip(page * limit)
     .limit(limit);
 }
+export async function searchProperty(
+  query: FilterQuery<PropertyDocument>,
+  page: number,
+  limit: number
+) {
+  return await PropertyModel.find(query)
+    .select("slug title price address")
+    .sort({ createdAt: -1 })
+    .skip(page * limit)
+    .limit(limit);
+}
