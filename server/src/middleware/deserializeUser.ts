@@ -16,7 +16,7 @@ const deserializeUser = async (
     return next();
   }
 
-  const decoded = verifyJwt(accessToken, "aTPK");
+  const decoded = verifyJwt<{_id: string}>(accessToken, "aTPK");
   
   if (decoded) {
     res.locals.user = decoded;

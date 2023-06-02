@@ -6,6 +6,7 @@ import {
   getAllUserHandler,
   getCurrentUser,
   publicProfile,
+  updateForgotPasswordHandler,
   updatePasswordHandler,
   updateProfile,
   verifyUserHandler,
@@ -16,6 +17,7 @@ import {
   accessForgotPasswordSchema,
   forgotPasswordSchema,
   publicProfileSchema,
+  updateForgotPasswordSchema,
   updatePasswordSchema,
   updateProfileSchema,
   verifyUserSchema,
@@ -24,7 +26,7 @@ import {
 const router = express.Router();
 
 router.post("/api/user", createUserHandler);
-router.post(
+router.get(
   "/api/verify/:emailverify",
   validateResource(verifyUserSchema),
   verifyUserHandler
@@ -49,6 +51,11 @@ router.post(
   "/api/user/updatepassword",
   [validateResource(updatePasswordSchema), requireUser],
   updatePasswordHandler
+);
+router.post(
+  "/api/user/updateforgotpassword",
+  [validateResource(updateForgotPasswordSchema), requireUser],
+  updateForgotPasswordHandler
 );
 router.post(
   "/api/user/updateprofile",

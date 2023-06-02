@@ -71,5 +71,12 @@ UserSchema.methods.comparePassword = async function (
   return bcrypt.compare(confirm_password, this.password).catch((e) => false);
 };
 
+export const updatePasswordHash = async (password: string) => {
+  const salt = await bcrypt.genSalt(config.get<number>("SWF"));
+  const hash = bcrypt.hashSync(password, salt);
+  password = hash;
+  return password;
+};
+
 const UserModel = mongoose.model<UserDocument>("User", UserSchema);
 export default UserModel;

@@ -9,8 +9,10 @@ import { signJwt, verifyJwt } from "../utils/jwt";
 import { get, omit } from "lodash";
 import { CreateSessionInput } from "../schema/session.schema";
 
-
-export async function createSessionHandler(req: Request<{},{},CreateSessionInput>, res: Response) {
+export async function createSessionHandler(
+  req: Request<{}, {}, CreateSessionInput>,
+  res: Response
+) {
   const { email, password } = req.body;
   const userAgent = req.get("userAgent");
   try {
@@ -32,14 +34,13 @@ export async function createSessionHandler(req: Request<{},{},CreateSessionInput
       user: user._id,
       useragent: userAgent,
     });
-    
-    const payload = omit(user.toJSON(), user.password);
-    const accessToken = signJwt(
-      payload,
-      "aTPrK",
-      { expiresIn: "1h" }
-    );
-    const refreshToken = signJwt({ ...session}, "rTPrK", { expiresIn: "1y" });
+
+    const accessToken = signJwt({ _id: user._id }, "aTPrK", {
+      expiresIn: "1h",
+    });
+    const refreshToken = signJwt({ session: session._id }, "rTPrK", {
+      expiresIn: "1y",
+    });
 
     const response = { accessToken, refreshToken };
     res.status(200).json({ data: response });
@@ -49,7 +50,7 @@ export async function createSessionHandler(req: Request<{},{},CreateSessionInput
 }
 
 export async function findSessionHandler(req: Request, res: Response) {
-  const userId = res.locals.user;
+  const userId = res.locals.user._id;
   try {
     const session = await findSession({ user: userId, valid: true });
     res.status(200).json({ data: session });
@@ -62,8 +63,10 @@ export async function refreshAccessTokenHandler(req: Request, res: Response) {
   const refreshToken: any = get(req, "headers.x-refresh");
 
   const userAgent = req.get("userAgent");
+  console.log(refreshToken);
 
   const decoded = verifyJwt<{ session: string }>(refreshToken, "rTPK");
+  console.log("decoded", decoded);
 
   if (!decoded) {
     return res.status(401).send("Could not refresh access token");
@@ -81,12 +84,7 @@ export async function refreshAccessTokenHandler(req: Request, res: Response) {
     return res.status(401).send("Could not refresh access token");
   }
 
-  const newsession = await createSession({
-    user: user._id,
-    useragent: userAgent,
-  });
-
-  const accessToken = signJwt({ ...newsession }, "aTPrK", { expiresIn: "1h" });
+  const accessToken = signJwt({ user: user._id }, "aTPrK", { expiresIn: "1h" });
 
   return res.send({ accessToken });
 }

@@ -11,7 +11,7 @@ import { createSessionSchema } from "../schema/session.schema";
 const router = express.Router();
 
 router.post("/api/session", validateResource(createSessionSchema), createSessionHandler);
-router.post("/api/session", requireUser, findSessionHandler);
-router.post("/api/session/refreshaccesstoken", refreshAccessTokenHandler);
+router.get("/api/session", requireUser, findSessionHandler);
+router.get("/api/session/refreshaccesstoken", refreshAccessTokenHandler);
 
 export default router;

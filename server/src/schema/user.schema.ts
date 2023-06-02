@@ -46,13 +46,11 @@ export const forgotPasswordSchema = object({
 export const accessForgotPasswordSchema = object({
   params: object({
     accesscode: string({ required_error: "verification is required" }),
-    verificationCode: string(),
   }),
 });
 export const publicProfileSchema = object({
   params: object({
     username: string({ required_error: "username is required" }),
-    verificationCode: string(),
   }),
 });
 
@@ -64,6 +62,19 @@ export const updatePasswordSchema = object({
     password: string({
       required_error: "Password is required",
     }).min(6, "Password is too short - should be min 6 chars"),
+  }),
+});
+export const updateForgotPasswordSchema = object({
+  body: object({
+    password: string({
+      required_error: "Password is required",
+    }).min(6, "Password is too short - should be min 6 chars"),
+    confirmPassword: string({
+      required_error: "Password is required",
+    }).min(6, "Password is too short - should be min 6 chars"),
+  }).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["passwordConfirmation"],
   }),
 });
 export const updateProfileSchema = object({
@@ -88,4 +99,5 @@ export type accessForgotPasswordInput = TypeOf<
 >["params"];
 export type publicProfileInput = TypeOf<typeof publicProfileSchema>["params"];
 export type updatePasswordInput = TypeOf<typeof updatePasswordSchema>["body"];
+export type updateForgotPasswordInput = TypeOf<typeof updateForgotPasswordSchema>["body"];
 export type updateProfileInput = TypeOf<typeof updateProfileSchema>["body"];

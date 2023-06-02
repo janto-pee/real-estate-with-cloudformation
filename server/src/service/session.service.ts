@@ -5,7 +5,7 @@ export const createSession = async (session: Partial<SessionInput>) => {
   return response;
 };
 export const findSession = async (session: Partial<SessionInput>) => {
-  const response = await SessionModel.findOne({ session });
+  const response = await SessionModel.findOne(session );
   return response;
 };
 

@@ -10,8 +10,7 @@ import {
 import { signJwt, verifyJwt } from "../utils/jwt";
 import { createSession, findSession } from "../service/session.service";
 import { nanoid } from "nanoid";
-import {AWSSES} from "../utils/configurations"
-
+import { AWSSES } from "../utils/configurations";
 
 import {
   CreateUserInput,
@@ -19,11 +18,14 @@ import {
   accessForgotPasswordInput,
   forgotPasswordInput,
   publicProfileInput,
+  updateForgotPasswordInput,
   updatePasswordInput,
   updateProfileInput,
 } from "../schema/user.schema";
 import sendEmail from "../utils/email";
 import config from "config";
+import { omit } from "lodash";
+import { updatePasswordHash } from "../model/user.model";
 
 export async function createUserHandler(
   req: Request<{}, {}, CreateUserInput>,
@@ -52,19 +54,18 @@ export async function createUserHandler(
         replyTo,
         "Activate your acount"
       ),
-      // (err, data) => {
-      //   if (err) {
-      //     console.log(err);
-      //     return res.json({ ok: false });
-      //   } else {
-      //     console.log(data);
-      //     return res.json({ ok: true });
-      //   }
-      // }
+      (err, data) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(data);
+        }
+      }
     );
-    const messageUrl = `http://localhost:3000/api/user/accessaccount/${newUserToJwt}`;
 
-    return res.status(200).json({ data: messageUrl });
+    return res
+      .status(200)
+      .json({ data: "please check your email for verification" });
   } catch (error: any) {
     if (error.code === 11000) {
       return res.status(409).send("Account already exists");
@@ -140,14 +141,21 @@ export async function forgotPassword(
         email,
         `
         <p>Please click the link below to reset your account password.</p>
-        <a href="${clientURL}/api/accessaccount/${message}">Activate my account</a>
+        <a href="${clientURL}/api/user/accessaccount/${message}">Activate my account</a>
         `,
         replyTo,
         "Activate your acount"
-      ),)
-    const messageUrl = `http://localhost:3000/api/user/accessaccount/${message}`;
+      ),
+      (err, data) => {
+        if (err) {
+          console.log("err");
+        } else {
+          console.log("email sent");
+        }
+      }
+    );
     // aws
-    res.status(200).json({ data: messageUrl });
+    res.status(200).json({ data: "please check your email" });
   } catch (error: any) {
     console.log(error.message);
     res.status(400).json({ data: error.message });
@@ -194,10 +202,13 @@ export async function accessForgotPassword(
 
 export async function getCurrentUser(req: Request, res: Response) {
   try {
-    console.log("get user controller .....");
-    const user = res.locals.user;
-    console.log(user);
-    return res.status(200).json({ data: user });
+    const user = res.locals.user._id;
+    const data = await findUserById(user);
+    if (!data) {
+      return res.status(400).json({ error: "unauthorised" });
+    }
+    const payload = omit(data.toJSON(), "password", "passwordResetCode");
+    return res.status(200).json({ data: payload });
   } catch (error: any) {
     res.status(400).json({ data: error.message });
   }
@@ -217,6 +228,30 @@ export async function publicProfile(
   }
 }
 
+export async function updateForgotPasswordHandler(
+  req: Request<{}, {}, updateForgotPasswordInput>,
+  res: Response
+) {
+  try {
+    const userId = res.locals.user._id;
+    const { password } = req.body;
+    const user = await findUserById(userId);
+    if (!user) {
+      return res.status(400).send(`unable to reset password`);
+    }
+
+    const updatedHash = await updatePasswordHash(password);
+
+    const updatedpassword = await updateUser(
+      { _id: userId },
+      { password: updatedHash },
+      { new: true }
+    );
+    return res.status(200).json({ data: updatedpassword });
+  } catch (error: any) {
+    res.status(400).json({ data: error.message });
+  }
+}
 export async function updatePasswordHandler(
   req: Request<{}, {}, updatePasswordInput>,
   res: Response
@@ -232,15 +267,15 @@ export async function updatePasswordHandler(
     if (!user) {
       return res.status(400).send(`unable to reset password`);
     }
-    console.log(user);
     const isValid = await user.comparePassword(oldpassword);
     if (!isValid) {
       return res.status(400).send(`password incorrect`);
     }
+    const updatedHash = await updatePasswordHash(password);
 
     const updatedpassword = await updateUser(
       { _id: userId },
-      { password: password },
+      { password: updatedHash },
       { new: true }
     );
     return res.status(200).json({ data: updatedpassword });
@@ -280,29 +315,3 @@ export async function getAllUserHandler(req: Request, res: Response) {
     return res.status(400).json({ data: error });
   }
 }
-
-// export async function getAllCourseHandler(req: Request, res: Response) {
-//   let page =
-//     typeof req.query.page !== "undefined" ? Number(req.query.page) - 1 : 0;
-//   let limit =
-//     typeof req.query.lmino !== "undefined" ? Number(req.query.lmino) : 5;
-//   const user = res.locals.user;
-//   if (!user) {
-//     return res.status(401).send("unauthorised user");
-//   }
-
-//   try {
-//     const Course = await getAllCourse(page, limit);
-//     const total = await CourseModel.countDocuments();
-//     const response = {
-//       error: false,
-//       total,
-//       "courses displayed": limit,
-//       page: page + 1,
-//       Course,
-//     };
-//     return res.status(200).send(response);
-//   } catch (error) {
-//     return res.status(400).send(error);
-//   }
-// }
