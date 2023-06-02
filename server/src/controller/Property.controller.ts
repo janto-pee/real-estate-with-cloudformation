@@ -18,11 +18,11 @@ export async function createPropertyHandler(req: Request, res: Response) {
       ...body,
       slug: slugify(`${body.type}-${body.address}-${body.price}-${nanoid(6)}`),
       postedby: userId,
-      location: {
-        type: "Point",
-        cordinates: [geo?.[0].longitude, geo?.[0].latitude],
-      },
-      googleMap: geo,
+      // location: {
+      //   type: "Point",
+      //   cordinates: [geo?.[0].longitude, geo?.[0].latitude],
+      // },
+      // googleMap: geo,
     });
 
     const user = await updateUser(

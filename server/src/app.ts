@@ -3,6 +3,7 @@ import config from 'config'
 import { connectToDB } from "./utils/dbConnect"
 import router from "./routes/routes"
 import morgan from 'morgan'
+import swaggerDocs from "./utils/swagger"
 import deserializeUser from "./middleware/deserializeUser"
 
 const app = express()
@@ -16,5 +17,6 @@ const port = config.get<number>('port')
 console.log('port ',port)
 app.listen(port, () => {
     connectToDB();
+    swaggerDocs(app, port);
     console.log(`listening on port http://localhost:${port}`)
 })
