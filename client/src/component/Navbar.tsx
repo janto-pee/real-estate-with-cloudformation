@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, HomeIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/auth";
 
 const navigation = [
@@ -16,10 +16,27 @@ function classNames(...classes: any[]) {
 }
 
 export default function Navbar() {
-
+  const navigate = useNavigate();
   // conditionally show auth token
-  const { auth } =useAuth()
-  const loggedIn = auth?.user !== null && auth?.accesstoken !== "" && auth?.refreshtoken !== ""
+  const { auth, setAuth } = useAuth();
+  const loggedIn =
+    auth?.user !== null &&
+    auth?.accesstoken !== "" &&
+    auth?.refreshtoken !== "";
+
+  const logout = () => {
+    setAuth({ user: null, accesstoken: "", refreshtoken: "" });
+    localStorage.removeItem("auth");
+    navigate("/");
+  };
+
+  // const handleDashboard = () => {
+  //   if (!loggedIn) {
+  //     navigate('/auth')
+  //   }else {
+  //     navigate('/dashboard')
+  //   }
+  // }
 
   return (
     <Disclosure as="nav" className="bg-[#0C134F]">
@@ -30,11 +47,11 @@ export default function Navbar() {
               <div className="flex flex items-center justify-center sm:items-stretch sm:justify-start">
                 {/* Company Image */}
                 <div className="flex flex-shrink-0 items-center">
-                  <NavLink to='/' className={''}>
+                  <NavLink to="/" className={""}>
                     <HomeIcon className="block h-8 w-auto lg:hidden text-white text-white text-md" />
                   </NavLink>
-                  <NavLink to='/' >
-                    <HomeIcon className="hidden text-sm h-8 w-auto lg:block text-white mr-4"  />
+                  <NavLink to="/">
+                    <HomeIcon className="hidden text-sm h-8 w-auto lg:block text-white mr-4" />
                   </NavLink>
                 </div>
                 <div className="hidden sm:ml-6 sm:block">
@@ -166,15 +183,23 @@ export default function Navbar() {
                 </Disclosure.Button>
               ))}
               <div>
-                {loggedIn? (
-                  <div>
-                    <span>{auth?.user}</span>
-                    <img
-                      className="h-8 w-8 rounded-full"
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      alt=""
-                    />
-                </div>
+                {loggedIn ? (
+                  <div className="flex gap-2 items-center">
+                    <div>
+                      <span>{auth?.user}</span>
+                      <img
+                        className="h-8 w-8 rounded-full"
+                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        alt=""
+                      />
+                      <button
+                        className="bg-violet-500 text-gray-300 block rounded-md px-4 py-2"
+                        onClick={logout}
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  </div>
                 ) : (
                   <NavLink to="/auth">
                     <button className="bg-blue-600 text-gray-300 block rounded-md px-3 py-2 font-medium ">

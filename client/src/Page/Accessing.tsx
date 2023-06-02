@@ -20,7 +20,7 @@ export default function Accessing() {
       toast.success("successfully logged in, welcome to Oga Landlord");
       setAuth(data);
       localStorage.setItem("auth", JSON.stringify(data));
-      navigate("/dashboard");
+      navigate("/");
       return data;
     } catch (error: any) {
       toast.error(error);

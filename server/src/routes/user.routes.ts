@@ -24,7 +24,7 @@ import {
 const router = express.Router();
 
 router.post("/api/user", createUserHandler);
-router.get(
+router.post(
   "/api/verify/:emailverify",
   validateResource(verifyUserSchema),
   verifyUserHandler

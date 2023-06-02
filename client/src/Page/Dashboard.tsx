@@ -5,6 +5,7 @@ import Sidebar from "../component/Profile/Sidebar";
 
 export default function Dashboard() {
   const [activeComponent, setActiveComponent] = useState("profilesummary");
+ 
   return (
     <PropertyDetailLayout>
       <div className='flex relative'>

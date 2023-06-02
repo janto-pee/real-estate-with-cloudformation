@@ -8,6 +8,7 @@ import Sell from "./Sell";
 import PropertyDetail from "./PropertyDetail";
 import Accessing from "./Accessing";
 import Activation from "./Activation";
+import ForgotPasswordPage from "./ForgotPasswordPage";
 
 export {
     Auth,
@@ -19,5 +20,6 @@ export {
     Sell,
     PropertyDetail,
     Accessing,
-    Activation
+    Activation,
+    ForgotPasswordPage
 }

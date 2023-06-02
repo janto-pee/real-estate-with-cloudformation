@@ -23,13 +23,16 @@ interface registerprop {
   setauthModal: any;
 }
 
-export default function Register({ authModal, setauthModal }: registerprop) {
-  const [userName, setUserName] = useState("");
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
+export default function Register({ setauthModal }: registerprop) {
+  const [registerData, setRegisterData] = useState({
+    username: "",
+    firstname: "",
+    lastname: "",
+    password: "",
+    role: "Buyer",
+    email: "",
+  });
   const [loading, setLoading] = useState(false);
-
-  console.log(authModal, setUserEmail)
 
   const { auth, setAuth } = useAuth();
 
@@ -39,17 +42,15 @@ export default function Register({ authModal, setauthModal }: registerprop) {
     try {
       e.preventDefault();
       setLoading(true);
-      if (userEmail !== "" && userPassword !== "") {
-        const { data } = await axios.post(`/register`, {
-          userName,
-          userEmail,
-          userPassword,
+      if (registerData.email !== "" && registerData.lastname !== "") {
+        const { data } = await axios.post(`/user`, {
+          ...registerData,
         });
         console.log(auth);
         setAuth(data);
         toast.success("user successfully resgistered");
         setLoading(false);
-        navigate("/dashboard");
+        navigate("/");
         return data;
       }
 
@@ -85,14 +86,69 @@ export default function Register({ authModal, setauthModal }: registerprop) {
                   name="username"
                   type="text"
                   autoComplete="username"
+                  value={registerData.email}
                   onChange={(e) => {
-                    setUserName(e.target.value);
+                    setRegisterData({
+                      ...registerData,
+                      username : e.target.value,
+                    });
                   }}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
+
+            <div>
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                firstname
+              </label>
+              <div className="mt-2">
+                <input
+                  id="firstname"
+                  name="firstname"
+                  type="text"
+                  autoComplete="firstname"
+                  onChange={(e) => {
+                    setRegisterData({
+                      ...registerData,
+                      firstname: e.target.value
+                    });
+                  }}
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="username"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                lastname
+              </label>
+              <div className="mt-2">
+                <input
+                  id="lastname"
+                  name="lastname"
+                  type="text"
+                  autoComplete="lastname"
+                  onChange={(e) => {
+                    setRegisterData({
+                      ...registerData,
+                      lastname: e.target.value,
+                    });
+                  }}
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+
             <div>
               <label
                 htmlFor="email"
@@ -106,6 +162,13 @@ export default function Register({ authModal, setauthModal }: registerprop) {
                   name="email"
                   type="email"
                   autoComplete="email"
+                  value={registerData.email}
+                  onChange={(e) => {
+                    setRegisterData({
+                      ...registerData,
+                      email: e.target.value,
+                    });
+                  }}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
@@ -135,8 +198,12 @@ export default function Register({ authModal, setauthModal }: registerprop) {
                   name="password"
                   type="password"
                   autoComplete="current-password"
+                  value={registerData.password}
                   onChange={(e) => {
-                    setUserPassword(e.target.value);
+                    setRegisterData({
+                      ...registerData,
+                      password: e.target.value,
+                    });
                   }}
                   required
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -151,7 +218,7 @@ export default function Register({ authModal, setauthModal }: registerprop) {
                   loading && "disabled bg-gray-200"
                 }`}
               >
-                { loading ? 'Waiting...': 'Register'}
+                {loading ? "Waiting..." : "Register"}
               </button>
             </div>
           </form>

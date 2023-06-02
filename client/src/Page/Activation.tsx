@@ -16,11 +16,11 @@ export default function Activation() {
 
   const requestActivation = async () => {
     try {
-      const { data } = await axios.post("/activation", verificationtoken);
+      const { data } = await axios.post(`/verify/${verificationtoken}`, verificationtoken);
       toast.success("successfully logged in, welcome to Oga Landlord");
       setAuth(data);
       localStorage.setItem("auth", JSON.stringify(data));
-      navigate("/dashboard");
+      navigate("/");
       return data;
     } catch (error: any) {
       toast.error(error);
@@ -30,8 +30,8 @@ export default function Activation() {
   };
 
   return (
-    <div className="flex items-center justify-center text-center text-4xl">
-      Activating User...
+    <div className="w-full h-screen flex items-center justify-center text-center ">
+      <h1 className="p-8 text-4xl text-gray-700">Verifing Email...</h1>
     </div>
   );
 }

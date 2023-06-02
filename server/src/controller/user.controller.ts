@@ -52,18 +52,19 @@ export async function createUserHandler(
         replyTo,
         "Activate your acount"
       ),
-      (err, data) => {
-        if (err) {
-          console.log(err);
-          return res.json({ ok: false });
-        } else {
-          console.log(data);
-          return res.json({ ok: true });
-        }
-      }
+      // (err, data) => {
+      //   if (err) {
+      //     console.log(err);
+      //     return res.json({ ok: false });
+      //   } else {
+      //     console.log(data);
+      //     return res.json({ ok: true });
+      //   }
+      // }
     );
+    const messageUrl = `http://localhost:3000/api/user/accessaccount/${newUserToJwt}`;
 
-    return res.status(200).json({ data: newUserToJwt });
+    return res.status(200).json({ data: messageUrl });
   } catch (error: any) {
     if (error.code === 11000) {
       return res.status(409).send("Account already exists");
@@ -130,7 +131,21 @@ export async function forgotPassword(
     const message = signJwt({ resetCode, user: user.email }, "awsEmailSign", {
       expiresIn: "1h",
     });
-    const messageUrl = `http://localhost:1337/api/user/accessaccount/${message}`;
+
+    const clientURL = config.get<string>("CLIENT_URL");
+    const replyTo = config.get<string>("REPLY_TO");
+
+    AWSSES.sendEmail(
+      sendEmail(
+        email,
+        `
+        <p>Please click the link below to reset your account password.</p>
+        <a href="${clientURL}/api/accessaccount/${message}">Activate my account</a>
+        `,
+        replyTo,
+        "Activate your acount"
+      ),)
+    const messageUrl = `http://localhost:3000/api/user/accessaccount/${message}`;
     // aws
     res.status(200).json({ data: messageUrl });
   } catch (error: any) {

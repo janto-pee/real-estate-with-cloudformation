@@ -38,14 +38,16 @@ export default function SignIn({ authModal, setauthModal }: signinprops) {
       e.preventDefault();
       setLoading(true);
       if (userEmail !== "" && userPassword !== "") {
-        const { data } = await axios.post(`/register`, {
-          userEmail,
-          userPassword,
+        const { data } = await axios.post(`/session`, {
+          email: userEmail,
+          password: userPassword,
         });
         setAuth(data);
         toast.success("user successfully resgistered");
+        localStorage.setItem("auth", JSON.stringify(data));
+        toast.success("Login Successful");
         setLoading(false);
-        navigate("/dashboard");
+        navigate("/");
         return;
       }
       return `Enter email and password field empty`;
