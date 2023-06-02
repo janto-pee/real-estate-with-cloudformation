@@ -3,27 +3,27 @@ import bcrypt from "bcrypt";
 import config from "config";
 import { string } from "zod";
 
-export interface PropertyInput  {
-    photos: any[],
-    Price: number,
-    address: string,
-    bedrooms: number,
-    bathrooms: number,
-    landsize: number,
-    carpark: number,
-    location: {
-      type: string
-      cordinates: number[]
-    },
-    title: string,
-    slug: string,
-    description: any,
-    sold: boolean,
-    googleMap: {},
-    type: string,
-    action: string,
-    view: number
-  }
+export interface PropertyInput {
+  photos: any[];
+  Price: number;
+  address: string;
+  bedrooms: number;
+  bathrooms: number;
+  landsize: number;
+  carpark: number;
+  location: {
+    type: string;
+    cordinates: number[];
+  };
+  title: string;
+  slug: string;
+  description: any;
+  sold: boolean;
+  googleMap: {};
+  type: string;
+  action: string;
+  view: number;
+}
 
 export interface PropertyDocument extends PropertyInput, mongoose.Document {
   createdAt: Date;
@@ -73,17 +73,17 @@ const PropertySchema = new mongoose.Schema(
     sold: { default: false, type: Boolean },
     googleMap: {},
     type: {
-        type: String,
-        default: "Other"
+      type: String,
+      default: "Other",
     },
     action: {
-        type: String,
-        default: "sell",
+      type: String,
+      default: "sell",
     },
     view: {
-        type:Number,
-        default: 0
-    }
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,

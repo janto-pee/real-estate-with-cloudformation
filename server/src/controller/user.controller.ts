@@ -315,3 +315,39 @@ export async function getAllUserHandler(req: Request, res: Response) {
     return res.status(400).json({ data: error });
   }
 }
+
+export async function addWishlist(req: Request, res: Response) {
+  try {
+    const userId = res.locals.user._id;
+    const { slug } = req.params;
+    if (!userId) {
+      return res.status(400).json({ error: "unauthorised user" });
+    }
+    const wishlist = await updateUser(
+      { _id: userId },
+      { $addToSet: { wishList: slug } },
+      { new: true }
+    );
+    return res.status(200).json({ data: "wishlist successfully added" });
+  } catch (error: any) {
+    return res.status(400).json({ error: error.message });
+  }
+}
+
+export async function addEnqueried(req: Request, res: Response) {
+  try {
+    const userId = res.locals.user._id;
+    const { slug } = req.params;
+    if (!userId) {
+      return res.status(400).json({ error: "unauthorised user" });
+    }
+    await updateUser(
+      { _id: userId },
+      { $addToSet: { enquiredProperty: slug } },
+      { new: true }
+    );
+    return res.status(200).json({ data: "wishlist successfully added" });
+  } catch (error: any) {
+    return res.status(400).json({ error: error.message });
+  }
+}

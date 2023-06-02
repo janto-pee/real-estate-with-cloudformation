@@ -19,8 +19,8 @@ export interface UserDocument extends UserInput, mongoose.Document {
   updatedAt: Date;
   passwordResetCode: string;
   verified: boolean;
-  enquiredProperty: ["_id"];
-  wishList: ["_id"];
+  enquiredProperty: ["slug"];
+  wishList: ["slug"];
   comparePassword(confirm_password: string): Promise<Boolean>;
 }
 
