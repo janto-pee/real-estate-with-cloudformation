@@ -50,7 +50,7 @@ const PropertySchema = new mongoose.Schema(
     carpark: Number,
     location: {
       type: {
-        type: string,
+        type: String,
         enum: ["Point"],
         default: "Point",
       },
