@@ -9,6 +9,7 @@ import { signJwt, verifyJwt } from "../utils/jwt";
 import { get, omit } from "lodash";
 import { CreateSessionInput } from "../schema/session.schema";
 
+
 export async function createSessionHandler(
   req: Request<{}, {}, CreateSessionInput>,
   res: Response

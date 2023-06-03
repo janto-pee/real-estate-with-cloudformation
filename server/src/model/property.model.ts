@@ -5,7 +5,7 @@ import { string } from "zod";
 
 export interface PropertyInput {
   photos: any[];
-  Price: number;
+  price: number;
   address: string;
   bedrooms: number;
   bathrooms: number;
@@ -34,7 +34,7 @@ export interface PropertyDocument extends PropertyInput, mongoose.Document {
 const PropertySchema = new mongoose.Schema(
   {
     photos: [{}],
-    Price: {
+    price: {
       type: Number,
       required: true,
       maxLength: 255,
