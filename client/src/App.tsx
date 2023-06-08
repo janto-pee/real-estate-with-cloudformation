@@ -4,20 +4,18 @@ import {
   Accessing,
   Activation,
   Auth,
-  Buy,
+  BuyPage,
   Contact,
   FindRealtors,
   ForgotPasswordPage,
   Home,
   PropertyDetail,
   Rent,
-  Sell,
 } from "./Page";
-import Dashboard from "./Page/Dashboard";
-import EditProfile from "./Page/EditProfile";
 import { AuthProvider } from "./context/auth";
 import { Toaster } from "react-hot-toast";
 import PrivateRoute from "./utils/PrivateRoute";
+import AgentDetailsPage from "./Page/AgentDetailsPage";
 
 function App() {
   return (
@@ -27,20 +25,27 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/buy" element={<Buy />} />
+            <Route path="/buy" element={<BuyPage />} />
             <Route path="/rent" element={<Rent />} />
-            <Route path="/find-realtor" element={<FindRealtors />} />
-            <Route path="/user/:propertyid" element={<PropertyDetail />} />
-            <Route path='/forgot-password' element={<ForgotPasswordPage />} />
-            <Route path="/sell" element={<Sell />} />
+            <Route path="/realtor" element={<FindRealtors />} />
+            <Route
+              path="/realtor/:realtorslug"
+              element={<AgentDetailsPage />}
+            />
+            <Route
+              path="/property/:propertyslug"
+              element={<PropertyDetail />}
+            />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/auth" element={<Auth />} />
-
             <Route path="/" element={<PrivateRoute />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/edit-profile" element={<EditProfile />} />
+            {/* put allprivate route here */}
             <Route />
 
-            <Route path="/auth/activate/:verificationtoken" element={<Activation />} />
+            <Route
+              path="/auth/activate/:verificationtoken"
+              element={<Activation />}
+            />
             <Route
               path="/auth/forgot-password/:token"
               element={<Accessing />}

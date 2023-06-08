@@ -2,30 +2,15 @@ import axios from "axios";
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useAuth } from "../context/auth";
+import { useAuth } from "../../context/auth";
 
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
+
 interface signinprops {
-  authModal: boolean;
   setauthModal: any;
 }
 
-export default function SignIn({ authModal, setauthModal }: signinprops) {
-  const { setAuth } = useAuth();
-  console.log(authModal)
+export default function SignIn({ setauthModal }: signinprops) {
+  const { setAuth } = useAuth()
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");

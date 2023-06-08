@@ -1,7 +1,7 @@
 import Auth from "./Auth";
-import Buy from "./Buy";
+import BuyPage from "./BuyPage";
 import Contact from "./Contact";
-import FindRealtors from "./FindRealtors";
+import FindRealtors from "./AgentsPage";
 import Home from "./Home";
 import Rent from "./Rent";
 import Sell from "./Sell";
@@ -12,7 +12,7 @@ import ForgotPasswordPage from "./ForgotPasswordPage";
 
 export {
     Auth,
-    Buy,
+    BuyPage,
     Contact,
     FindRealtors,
     Home,

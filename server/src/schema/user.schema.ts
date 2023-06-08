@@ -53,7 +53,7 @@ import { object, string, TypeOf } from "zod";
  *        passwordConfirmation:
  *          type: string
  *          example: stringPassword123
-*/
+ */
 
 export const createUserSchema = object({
   body: object({
@@ -83,6 +83,7 @@ export const createUserSchema = object({
     path: ["passwordConfirmation"],
   }),
 });
+
 /**
  * @openapi
  * components:
@@ -300,5 +301,7 @@ export type accessForgotPasswordInput = TypeOf<
 >["params"];
 export type publicProfileInput = TypeOf<typeof publicProfileSchema>["params"];
 export type updatePasswordInput = TypeOf<typeof updatePasswordSchema>["body"];
-export type updateForgotPasswordInput = TypeOf<typeof updateForgotPasswordSchema>["body"];
+export type updateForgotPasswordInput = TypeOf<
+  typeof updateForgotPasswordSchema
+>["body"];
 export type updateProfileInput = TypeOf<typeof updateProfileSchema>["body"];

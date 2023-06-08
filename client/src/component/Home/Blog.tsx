@@ -61,11 +61,11 @@ export default function Blog() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8 flex flex-col items-center">
         <div className="mx-auto max-w-2xl lg:mx-0 text-center">
           <h2 className="text-4xl tracking-tight sm:text-4xl">From the blog</h2>
-          <p className="mt-2 text-lg hidden md:flex leading-8 text-gray-600">
+          {/* <p className="mt-2 text-lg hidden md:flex leading-8 text-gray-600">
             Learn about the happenings in the real estate industry around the world
-          </p>
+          </p> */}
         </div>
-        <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+        <div className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-4 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           {posts.map((post) => (
             <article key={post.id} className="flex max-w-xl flex-col items-start justify-between">
               <div className="flex items-center gap-x-4 text-xs">

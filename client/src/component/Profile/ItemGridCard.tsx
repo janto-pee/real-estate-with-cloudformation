@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { AiFillDelete, AiOutlineEdit, AiFillHeart } from "react-icons/ai";
+import ImageGallery from "react-image-gallery";
 
 interface ItemGridCardInterface {
   auth?: boolean;
@@ -28,12 +29,28 @@ export default function ItemGridCard({
     console.log(`adding to wishlist`);
     setWishlist(!wishlist);
   };
+  
+const images = [
+  {
+    original: "https://picsum.photos/id/1018/1260/600/",
+    thumbnail: "https://picsum.photos/id/1018/250/150/",
+  },
+  {
+    original: "https://picsum.photos/id/1015/1000/600/",
+    thumbnail: "https://picsum.photos/id/1015/250/150/",
+  },
+  {
+    original: "https://picsum.photos/id/1019/1000/600/",
+    thumbnail: "https://picsum.photos/id/1019/250/150/",
+  },
+];
 
   return (
     <div key={product.id} className="group relative bg-white">
       <div
         className={`min-h-32  aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 ${imgheight1}`}
       >
+         {/* <ImageGallery items={images} showThumbnails={false} /> */}
         <img
           src={`/img/card-img${product.id}.jpg`}
           alt={product.imageAlt}

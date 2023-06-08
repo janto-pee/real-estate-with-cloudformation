@@ -1,4 +1,5 @@
 import { Card, Pagination } from "..";
+// import PDNav from "../PropertyDetail/PDNav";
 
 interface ListItemProps {
   classnames?: string;
@@ -13,6 +14,7 @@ interface ListItemProps {
   setDeleteHouse?: any;
   cardgridclass?: string;
 }
+
 const products = [
   {
     id: 1,
@@ -80,12 +82,7 @@ const products = [
   // More products...
 ];
 
-export default function ListItems({
-  classnames,
-  headerclass,
-  subtextclass,
-  subtext,
-  headertext,
+export default function RentProperties({
   paginate,
   edit,
   deleteHouse,
@@ -94,39 +91,30 @@ export default function ListItems({
   cardgridclass,
 }: ListItemProps) {
   return (
-    <div
-      className={`bg-gray-100 ${classnames} flex flex-col items-center justify-center `}
-    >
-      <div className="text-center">
-        <h1 className={`${headerclass}`}>{headertext}</h1>
-        <small className={subtextclass}>{subtext}</small>
-      </div>
-      <ul
-        className={`grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 py-8 ${cardgridclass}`}
-      >
-        {products.map((item) => (
-          <Card
-            key={item.id}
-            carditem={item}
-            edit={edit}
-            setEdit={setEdit}
-            deleteHouse={deleteHouse}
-            setDeleteHouse={setDeleteHouse}
-          />
-        ))}
-      </ul>
-      {paginate ? (
-        <Pagination />
-      ) : (
-        <button
-          type="button"
-          className="mx-auto inline-flex items-center border-orange-500 border-2 px-12 py-2 text-md font-semibold text-orange shadow-sm hover:bg-orange-500 hover:text-white"
+    <div className={`bg-gray-100`}>
+      <div className="mx-auto max-w-7xl p-8 lg:pb-24">
+        <div className="my-4 md:my-8 text-start md:mb-12">
+          <h1 className="text-start text-2xl lg:text-4xl font-[400] ">
+            For Rent
+          </h1>
+        </div>
+        <p className="my-2">52 properties</p>
+        <ul
+          className={`grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 pb-8 ${cardgridclass}`}
         >
-          Load More
-        </button>
-      )}
+          {products.map((item) => (
+            <Card
+              key={item.id}
+              carditem={item}
+              edit={edit}
+              setEdit={setEdit}
+              deleteHouse={deleteHouse}
+              setDeleteHouse={setDeleteHouse}
+            />
+          ))}
+        </ul>
+        <Pagination />
+      </div>
     </div>
   );
 }
-
-// tailwind-element

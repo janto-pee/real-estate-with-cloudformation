@@ -1,18 +1,6 @@
-import { Card, Pagination } from "..";
+import { Pagination } from "..";
+import ItemGridCard from "../Profile/ItemGridCard";
 
-interface ListItemProps {
-  classnames?: string;
-  headerclass?: string;
-  headertext?: string;
-  paginate?: boolean;
-  subtextclass?: string;
-  subtext?: string;
-  edit?: boolean;
-  setEdit?: any;
-  deleteHouse?: boolean;
-  setDeleteHouse?: any;
-  cardgridclass?: string;
-}
 const products = [
   {
     id: 1,
@@ -80,53 +68,53 @@ const products = [
   // More products...
 ];
 
-export default function ListItems({
-  classnames,
-  headerclass,
-  subtextclass,
-  subtext,
-  headertext,
-  paginate,
+interface ItemGridInterface {
+  auth?: boolean;
+  itemheader?: string;
+  edit?: boolean;
+  setEdit?: any;
+  deleteHouse?: boolean;
+  setDeleteHouse?: any;
+  imgheight?: string;
+  imgheight1?: string;
+  headerclass?: string;
+}
+export default function Buy({
+  auth,
   edit,
   deleteHouse,
   setEdit,
   setDeleteHouse,
-  cardgridclass,
-}: ListItemProps) {
+  imgheight,
+}: ItemGridInterface) {
   return (
-    <div
-      className={`bg-gray-100 ${classnames} flex flex-col items-center justify-center `}
-    >
-      <div className="text-center">
-        <h1 className={`${headerclass}`}>{headertext}</h1>
-        <small className={subtextclass}>{subtext}</small>
-      </div>
-      <ul
-        className={`grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 py-8 ${cardgridclass}`}
-      >
-        {products.map((item) => (
-          <Card
-            key={item.id}
-            carditem={item}
-            edit={edit}
-            setEdit={setEdit}
-            deleteHouse={deleteHouse}
-            setDeleteHouse={setDeleteHouse}
-          />
-        ))}
-      </ul>
-      {paginate ? (
-        <Pagination />
-      ) : (
-        <button
-          type="button"
-          className="mx-auto inline-flex items-center border-orange-500 border-2 px-12 py-2 text-md font-semibold text-orange shadow-sm hover:bg-orange-500 hover:text-white"
+    <div className="bg-gray-100">
+      <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:max-w-7xl lg:px-8">
+        <h2
+          className={`text-2xl md:text-3xl lg:text-4xl  tracking-tight text-gray-900 `}
         >
-          Load More
-        </button>
-      )}
+          For Sale
+        </h2>
+        <p className="mt-8 mb-2 lg:mt-12">52 Properties</p>
+
+        <div className="  grid grid-cols-1 gap-x-6 gap-y-10 pb-8 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+          {products.map((product) => (
+            <ItemGridCard
+              key={product.id}
+              auth={auth}
+              product={product}
+              edit={edit}
+              setEdit={setEdit}
+              deleteHouse={deleteHouse}
+              setDeleteHouse={setDeleteHouse}
+              imgheight={imgheight}
+              imgheight1={"lg:h-80"}
+            />
+          ))}
+        </div>
+
+        <Pagination />
+      </div>
     </div>
   );
 }
-
-// tailwind-element

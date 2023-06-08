@@ -1,26 +1,31 @@
-import { Link } from "react-router-dom";
-import {
-  ChevronDownIcon,
-  EyeDropperIcon,
-} from "@heroicons/react/20/solid";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { Link, useParams } from "react-router-dom";
+import { ChevronDownIcon, EyeDropperIcon } from "@heroicons/react/20/solid";
+import { BiBed, BiBath, BiArea } from "react-icons/bi";
 
 interface CardInterface {
-  carditem: any
+  carditem: any;
   edit?: boolean;
   setEdit?: any;
   deleteHouse?: boolean;
   setDeleteHouse?: any;
 }
 
-export default function Card({carditem, edit, deleteHouse, setEdit, setDeleteHouse,}: CardInterface) {
-  console.log(edit,deleteHouse, setDeleteHouse, setEdit)
+export default function Card({
+  carditem,
+  edit,
+  deleteHouse,
+  setEdit,
+  setDeleteHouse,
+}: CardInterface) {
+  console.log(edit, deleteHouse, setDeleteHouse, setEdit);
   const schools = "schools";
   const degreeAbbr = "Bsc";
 
+  const params = useParams();
+
   return (
     <div className="bg-white border border-gray-200 rounded-sm shadow-md overflow-hidden  relative text-left hover:shadow-xl">
-      <Link to={`/courses/`} className="cursor-pointer">
+      <Link to={`/property/${params.propertyslug}`} className="cursor-pointer">
         {/* image */}
         <img
           className="w-full h-72"
@@ -32,33 +37,35 @@ export default function Card({carditem, edit, deleteHouse, setEdit, setDeleteHou
 
         {/* bottom white text */}
         <div className="bg-white p-4">
-          <h5 className="pt-2 mb-4 text-lg font-[500]  tracking-tight text-gray-900 ">
-            {'Light And Modern Apartment'}
+          <h5 className="pt-2 mb-4 text-md font-[400]  tracking-tight text-gray-800 ">
+            {"Light And Modern Apartment"}
           </h5>
           <div className="mb-4 font-normal text-gray-700 flex justify-between items-center">
-            <p className="text-xl text-blue-800">#300,000/yr</p>
+            <p className="text-lg text-blue-800">#300,000/yr</p>
 
             <div className="flex items-center gap-4">
-                <div className="flex items-center">
-                <MagnifyingGlassIcon
-              className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
-              aria-hidden="true"
-            />4
-                </div>
-                <div className="flex items-center">
-                <MagnifyingGlassIcon
-              className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
-              aria-hidden="true"
-            />4
-                </div>
-                <div className="flex items-center">
-                <MagnifyingGlassIcon
-              className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
-              aria-hidden="true"
-            />4
-                </div>
+              <div className="flex items-center">
+                <BiBed
+                  className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
+                  aria-hidden="true"
+                />
+                <span className="text-gray-500">4</span>
+              </div>
+              <div className="flex items-center">
+                <BiBath
+                  className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
+                  aria-hidden="true"
+                />
+                <span className="text-gray-500">4</span>
+              </div>
+              <div className="flex items-center">
+                <BiArea
+                  className="-ml-0.5 mr-1.5 h-5 w-5 text-gray-400"
+                  aria-hidden="true"
+                />
+                <span className="text-gray-500">4</span>
+              </div>
             </div>
-
           </div>
         </div>
 

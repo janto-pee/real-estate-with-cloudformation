@@ -180,6 +180,8 @@ router.post(
   [validateResource(updatePasswordSchema), requireUser],
   updatePasswordHandler
 );
+
+
 router.post(
   "/api/user/updateforgotpassword",
   [validateResource(updateForgotPasswordSchema), requireUser],

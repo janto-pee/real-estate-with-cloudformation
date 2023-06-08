@@ -200,6 +200,31 @@ export async function accessForgotPassword(
   }
 }
 
+export async function updateForgotPasswordHandler(
+  req: Request<{}, {}, updateForgotPasswordInput>,
+  res: Response
+) {
+  try {
+    const userId = res.locals.user._id;
+    const { password } = req.body;
+    const user = await findUserById(userId);
+    if (!user) {
+      return res.status(400).send(`unable to reset password`);
+    }
+
+    const updatedHash = await updatePasswordHash(password);
+
+    const updatedpassword = await updateUser(
+      { _id: userId },
+      { password: updatedHash },
+      { new: true }
+    );
+    return res.status(200).json({ data: updatedpassword });
+  } catch (error: any) {
+    res.status(400).json({ data: error.message });
+  }
+}
+
 export async function getCurrentUser(req: Request, res: Response) {
   try {
     const user = res.locals.user._id;
@@ -228,30 +253,6 @@ export async function publicProfile(
   }
 }
 
-export async function updateForgotPasswordHandler(
-  req: Request<{}, {}, updateForgotPasswordInput>,
-  res: Response
-) {
-  try {
-    const userId = res.locals.user._id;
-    const { password } = req.body;
-    const user = await findUserById(userId);
-    if (!user) {
-      return res.status(400).send(`unable to reset password`);
-    }
-
-    const updatedHash = await updatePasswordHash(password);
-
-    const updatedpassword = await updateUser(
-      { _id: userId },
-      { password: updatedHash },
-      { new: true }
-    );
-    return res.status(200).json({ data: updatedpassword });
-  } catch (error: any) {
-    res.status(400).json({ data: error.message });
-  }
-}
 export async function updatePasswordHandler(
   req: Request<{}, {}, updatePasswordInput>,
   res: Response

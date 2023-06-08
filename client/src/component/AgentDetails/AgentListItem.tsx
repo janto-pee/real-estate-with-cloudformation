@@ -1,17 +1,10 @@
 import { Card, Pagination } from "..";
 
 interface ListItemProps {
-  classnames?: string;
-  headerclass?: string;
-  headertext?: string;
-  paginate?: boolean;
-  subtextclass?: string;
-  subtext?: string;
   edit?: boolean;
   setEdit?: any;
   deleteHouse?: boolean;
   setDeleteHouse?: any;
-  cardgridclass?: string;
 }
 const products = [
   {
@@ -80,30 +73,15 @@ const products = [
   // More products...
 ];
 
-export default function ListItems({
-  classnames,
-  headerclass,
-  subtextclass,
-  subtext,
-  headertext,
-  paginate,
+export default function AgentListItem({
   edit,
   deleteHouse,
   setEdit,
   setDeleteHouse,
-  cardgridclass,
 }: ListItemProps) {
   return (
-    <div
-      className={`bg-gray-100 ${classnames} flex flex-col items-center justify-center `}
-    >
-      <div className="text-center">
-        <h1 className={`${headerclass}`}>{headertext}</h1>
-        <small className={subtextclass}>{subtext}</small>
-      </div>
-      <ul
-        className={`grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 py-8 ${cardgridclass}`}
-      >
+    <div className={`bg-gray-100 flex flex-col items-center justify-center `}>
+      <ul className={`grid md:grid-cols-2 gap-8 mb-16 py-8`}>
         {products.map((item) => (
           <Card
             key={item.id}
@@ -115,16 +93,7 @@ export default function ListItems({
           />
         ))}
       </ul>
-      {paginate ? (
-        <Pagination />
-      ) : (
-        <button
-          type="button"
-          className="mx-auto inline-flex items-center border-orange-500 border-2 px-12 py-2 text-md font-semibold text-orange shadow-sm hover:bg-orange-500 hover:text-white"
-        >
-          Load More
-        </button>
-      )}
+      <Pagination />
     </div>
   );
 }

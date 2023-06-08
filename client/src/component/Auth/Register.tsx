@@ -2,24 +2,9 @@ import axios from "axios";
 import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/auth";
+import { useAuth } from "../../context/auth";
 
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
 interface registerprop {
-  authModal: boolean;
   setauthModal: any;
 }
 
@@ -29,7 +14,6 @@ export default function Register({ setauthModal }: registerprop) {
     firstname: "",
     lastname: "",
     password: "",
-    role: "Buyer",
     email: "",
   });
   const [loading, setLoading] = useState(false);
@@ -40,24 +24,26 @@ export default function Register({ setauthModal }: registerprop) {
 
   const handleSubmit = async (e: FormEvent) => {
     try {
-      e.preventDefault();
-      setLoading(true);
+      console.log(registerData);
       if (registerData.email !== "" && registerData.lastname !== "") {
-        const { data } = await axios.post(`/user`, {
+        e.preventDefault();
+        setLoading(true);
+        const { data } = await axios.post(`user`, {
           ...registerData,
         });
-        console.log(auth);
+        console.log(data, auth);
         setAuth(data);
         toast.success("user successfully resgistered");
         setLoading(false);
         navigate("/");
-        return data;
+        return registerData;
       }
 
       return `Enter email and password`;
     } catch (error: any) {
       setLoading(false);
-      toast.error(error);
+      console.log(error);
+      toast.error(error.message);
       return error;
     }
   };
@@ -71,7 +57,7 @@ export default function Register({ setauthModal }: registerprop) {
           </h2>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mt-10 sm:mx-auto w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label
@@ -86,15 +72,15 @@ export default function Register({ setauthModal }: registerprop) {
                   name="username"
                   type="text"
                   autoComplete="username"
-                  value={registerData.email}
+                  value={registerData.username}
                   onChange={(e) => {
                     setRegisterData({
                       ...registerData,
-                      username : e.target.value,
+                      username: e.target.value,
                     });
                   }}
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -115,11 +101,11 @@ export default function Register({ setauthModal }: registerprop) {
                   onChange={(e) => {
                     setRegisterData({
                       ...registerData,
-                      firstname: e.target.value
+                      firstname: e.target.value,
                     });
                   }}
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -144,7 +130,7 @@ export default function Register({ setauthModal }: registerprop) {
                     });
                   }}
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -170,7 +156,7 @@ export default function Register({ setauthModal }: registerprop) {
                     });
                   }}
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -206,7 +192,7 @@ export default function Register({ setauthModal }: registerprop) {
                     });
                   }}
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>

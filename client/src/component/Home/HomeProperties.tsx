@@ -80,12 +80,7 @@ const products = [
   // More products...
 ];
 
-export default function ListItems({
-  classnames,
-  headerclass,
-  subtextclass,
-  subtext,
-  headertext,
+export default function HomeProperties({
   paginate,
   edit,
   deleteHouse,
@@ -95,11 +90,10 @@ export default function ListItems({
 }: ListItemProps) {
   return (
     <div
-      className={`bg-gray-100 ${classnames} flex flex-col items-center justify-center `}
+      className={`bg-gray-100 p-8 lg:pb-24 flex flex-col items-center justify-center `}
     >
-      <div className="text-center">
-        <h1 className={`${headerclass}`}>{headertext}</h1>
-        <small className={subtextclass}>{subtext}</small>
+      <div className="text-center my-4 md:my-8">
+        <h1 className="text-2xl lg:text-4xl font-[300] ">Discover Our Best Deals</h1>
       </div>
       <ul
         className={`grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 py-8 ${cardgridclass}`}
@@ -128,5 +122,3 @@ export default function ListItems({
     </div>
   );
 }
-
-// tailwind-element

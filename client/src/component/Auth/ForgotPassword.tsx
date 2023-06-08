@@ -2,20 +2,7 @@ import axios from "axios";
 import { useState, FormEvent } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
-/*
-  This example requires some changes to your config:
-  
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
+
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,7 +12,7 @@ export default function ForgotPassword() {
       e.preventDefault();
       setLoading(true);
       if (email !== "") {
-        await axios.post(`/user/forgot-password`, {
+        await axios.post(`/forgotpassword`, {
           email,
         });
         toast.success("password reset email sent");
@@ -35,7 +22,7 @@ export default function ForgotPassword() {
       return `Enter email and password field empty`;
     } catch (error: any) {
       setLoading(false);
-      toast.error(error);
+      toast.error(error.message);
       return error;
     }
   };

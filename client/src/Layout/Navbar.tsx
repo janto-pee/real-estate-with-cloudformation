@@ -7,8 +7,8 @@ import { useAuth } from "../context/auth";
 const navigation = [
   { name: "Rent House", href: "/rent", current: false },
   { name: "Buy Properties", href: "/buy", current: false },
-  { name: "Agents", href: "/find-realtor", current: false },
-  { name: "Sell Properties", href: "/sell", current: false },
+  { name: "Agents", href: "/realtor", current: false },
+  { name: "Contact Us", href: "/contact", current: false },
 ];
 
 function classNames(...classes: any[]) {
@@ -30,13 +30,6 @@ export default function Navbar() {
     navigate("/");
   };
 
-  // const handleDashboard = () => {
-  //   if (!loggedIn) {
-  //     navigate('/auth')
-  //   }else {
-  //     navigate('/dashboard')
-  //   }
-  // }
 
   return (
     <Disclosure as="nav" className="bg-[#0C134F]">
@@ -155,8 +148,8 @@ export default function Navbar() {
                   </Menu>
                 ) : (
                   <NavLink to="/auth">
-                    <button className="bg-violet-500 text-gray-300 block rounded-md px-8 py-2 text-base font-medium">
-                      Register
+                    <button className="bg-violet-500 text-gray-100 block rounded-md px-8 py-2 text-base font-medium">
+                      Create Listing
                     </button>
                   </NavLink>
                 )}
@@ -202,8 +195,8 @@ export default function Navbar() {
                   </div>
                 ) : (
                   <NavLink to="/auth">
-                    <button className="bg-blue-600 text-gray-300 block rounded-md px-3 py-2 font-medium ">
-                      Register
+                    <button className="bg-blue-500 text-gray-300 block rounded-md px-3 py-2 font-medium ">
+                      Create Listing
                     </button>
                   </NavLink>
                 )}
