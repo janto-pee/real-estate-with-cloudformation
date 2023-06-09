@@ -4,13 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuth } from "../../context/auth";
 
-
 interface signinprops {
   setauthModal: any;
 }
 
 export default function SignIn({ setauthModal }: signinprops) {
-  const { setAuth } = useAuth()
+  const { setAuth } = useAuth();
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -18,27 +17,51 @@ export default function SignIn({ setauthModal }: signinprops) {
 
   const navigate = useNavigate();
 
+  // const handleSubmit = async (e: FormEvent) => {
+  //   try {
+  //     e.preventDefault();
+  //     setLoading(true);
+  //       const { data } = await axios.post(`/session`, {
+  //         email: userEmail,
+  //         password: userPassword,
+  //       });
+  //       const response = data.json()
+  //       setAuth(data);
+  //       localStorage.setItem("auth", JSON.stringify(data));
+  //       toast.success("Login Successful");
+  //       console.log(response)
+  //       setLoading(false);
+  //       navigate("/");
+  //       return;
+  //   } catch (error: any) {
+  //     setLoading(false);
+  //     toast.error(error.message);
+  //     return error;
+  //   }
+  // };
   const handleSubmit = async (e: FormEvent) => {
     try {
       e.preventDefault();
       setLoading(true);
-      if (userEmail !== "" && userPassword !== "") {
-        const { data } = await axios.post(`/session`, {
+      const data = await fetch("https://realance-com-ng.onrender.com/api/session", {
+        method: "POST",
+        body: JSON.stringify({
           email: userEmail,
           password: userPassword,
-        });
-        setAuth(data);
-        toast.success("user successfully resgistered");
-        localStorage.setItem("auth", JSON.stringify(data));
-        toast.success("Login Successful");
-        setLoading(false);
-        navigate("/");
-        return;
-      }
-      return `Enter email and password field empty`;
+        }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      const response = await data.json();
+      toast.success("Login Successful");
+      console.log(response);
+      setLoading(false);
+      return response;
     } catch (error: any) {
       setLoading(false);
-      toast.error(error);
+      toast.error(error.message);
       return error;
     }
   };
@@ -69,7 +92,7 @@ export default function SignIn({ setauthModal }: signinprops) {
                   autoComplete="email"
                   required
                   onChange={(e) => setUserEmail(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -99,7 +122,7 @@ export default function SignIn({ setauthModal }: signinprops) {
                   autoComplete="current-password"
                   required
                   onChange={(e) => setUserPassword(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>

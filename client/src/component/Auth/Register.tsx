@@ -28,7 +28,7 @@ export default function Register({ setauthModal }: registerprop) {
       if (registerData.email !== "" && registerData.lastname !== "") {
         e.preventDefault();
         setLoading(true);
-        const { data } = await axios.post(`user`, {
+        const { data } = await axios.post(`/user`, {
           ...registerData,
         });
         console.log(data, auth);

@@ -5,7 +5,7 @@ export const corsOptions = {
     "https://jc-project.vercel.app/",
     "https://postutmeportal.com.ng",
     "postutmeportal.com.ng",
-    "http://localhost:3000",
+    "http://localhost:5173",
   ],
   optionsSuccessStatus: 200,
 };
