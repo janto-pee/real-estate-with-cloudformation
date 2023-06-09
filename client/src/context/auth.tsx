@@ -11,9 +11,20 @@ import axios from "axios";
 import { API } from "../config";
 
 // https://hackernoon.com/creating-context-in-reactjs-using-typescript--very important next time so you dont spend 2hours again
+interface signedUser {
+  _id: string | null;
+  username: string | null;
+  firstname: string | null;
+  lastname: string | null;
+  email: string | null;
+  address: string | null;
+  company: string | null;
+  verified: false;
+  createdAt: string | null;
+}
 
 interface AuthInterface {
-  user: string | null;
+  user: signedUser;
   accesstoken: string;
   refreshtoken: string;
 }
@@ -24,19 +35,31 @@ interface AuthContextInterface {
 
 const defaultState = {
   auth: {
-    user: null,
+    user: {},
     accesstoken: "",
     refreshtoken: "",
   },
   // plase check the console.log(auth)
-  setAuth: (auth: AuthInterface) => {console.log(auth)},
+  setAuth: (auth: AuthInterface) => {
+    console.log(auth);
+  },
 } as AuthContextInterface;
 
 const AuthContext = createContext<AuthContextInterface>(defaultState);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [auth, setAuth] = useState<AuthInterface>({
-    user: null,
+    user: {
+      _id: null,
+      username: null,
+      firstname: null,
+      lastname: null,
+      email: null,
+      address: null,
+      company: null,
+      verified: false,
+      createdAt: null,
+    },
     accesstoken: "",
     refreshtoken: "",
   });

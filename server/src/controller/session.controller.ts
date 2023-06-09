@@ -27,9 +27,9 @@ export async function createSessionHandler(
       return res.status(400).send(`email or password incorrect`);
     }
 
-    // if (!user.verified) {
-    //   return res.status(400).send(`user not verified`);
-    // }
+    if (!user.verified) {
+      return res.status(400).send(`user not verified`);
+    }
 
     // const body
     const session = await createSession({
@@ -44,7 +44,7 @@ export async function createSessionHandler(
       expiresIn: "1y",
     });
 
-    const signeduser = omit(user.toJSON(), "password")
+    const signeduser = omit(user.toJSON(), "password","role","passwordResetCode", "__v")
 
     const response = { signeduser, accessToken, refreshToken };
     res.status(200).json({ data: response });

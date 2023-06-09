@@ -16,7 +16,10 @@ export default function Accessing() {
 
   const requestActivation = async () => {
     try {
-      const { data } = await axios.post("/user/accessaccount/${accesscode}", accesscode);
+      const { data } = await axios.post(
+        `https://realance-com-ng.onrender.com/api/user/accessaccount/${accesscode}`,
+        accesscode
+      );
       toast.success("successfully logged in, welcome to Oga Landlord");
       setAuth(data);
       localStorage.setItem("auth", JSON.stringify(data));

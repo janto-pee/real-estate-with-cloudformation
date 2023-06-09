@@ -1,28 +1,31 @@
 import axios from "axios";
 import { useState, FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     try {
       e.preventDefault();
       setLoading(true);
-      if (email !== "") {
-        await axios.post(`/forgotpassword`, {
+      await axios.post(
+        `https://realance-com-ng.onrender.com/api/user/forgotpassword`,
+        {
           email,
-        });
-        toast.success("password reset email sent");
-        setLoading(false);
-        return;
-      }
-      return `Enter email and password field empty`;
+        }
+      );
+      toast.success("password reset email sent");
+      setLoading(false);
+      navigate("/");
+      return;
     } catch (error: any) {
       setLoading(false);
-      toast.error(error.message);
+      console.log(error, typeof error.response.data.message);
+      toast.error(error.response.data.message);
       return error;
     }
   };
@@ -50,7 +53,7 @@ export default function ForgotPassword() {
                   onChange={(e) => {
                     setEmail(e.target.value);
                   }}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -59,9 +62,11 @@ export default function ForgotPassword() {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className={`flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${
+                  loading ? "bg-indigo-400" : "bg-indigo-600"
+                }`}
               >
-                Sign in
+                {loading? 'waiting...' : 'Sign in'}
               </button>
             </div>
           </form>

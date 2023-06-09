@@ -49,7 +49,7 @@ export async function createUserHandler(
         email,
         `
         <p>Please click the link below to activate your account.</p>
-        <a href="${clientURL}/api/verify/${newUserToJwt}">Activate my account</a>
+        <a href="${clientURL}/auth/activate/${newUserToJwt}">Activate my account</a>
         `,
         replyTo,
         "Activate your acount"
@@ -141,7 +141,7 @@ export async function forgotPassword(
         email,
         `
         <p>Please click the link below to reset your account password.</p>
-        <a href="${clientURL}/api/user/accessaccount/${message}">Activate my account</a>
+        <a href="${clientURL}/auth/user/accessaccount/${message}">Activate my account</a>
         `,
         replyTo,
         "Activate your acount"

@@ -9,7 +9,7 @@ interface signinprops {
 }
 
 export default function SignIn({ setauthModal }: signinprops) {
-  const { setAuth } = useAuth();
+  const { auth, setAuth } = useAuth();
 
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
@@ -25,13 +25,12 @@ export default function SignIn({ setauthModal }: signinprops) {
           email: userEmail,
           password: userPassword,
         });
-        const response = data.json()
-        // setAuth(data);
-        // localStorage.setItem("auth", JSON.stringify(data));
+        setAuth(data);
+        localStorage.setItem("auth", JSON.stringify(data));
+        console.log(data, auth)
         toast.success("Login Successful");
-        console.log(response)
         setLoading(false);
-        // navigate("/");
+        navigate("/");
         return;
     } catch (error: any) {
       console.log(error)

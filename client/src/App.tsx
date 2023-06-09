@@ -47,7 +47,7 @@ function App() {
               element={<Activation />}
             />
             <Route
-              path="/api/user/accessaccount/:accesscode"
+              path="/auth/user/accessaccount/:accesscode"
               element={<Accessing />}
             />
 
