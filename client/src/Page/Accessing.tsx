@@ -8,15 +8,15 @@ export default function Accessing() {
   const { setAuth } = useAuth();
   const navigate = useNavigate();
   // get token from url
-  const { verificationtoken } = useParams();
+  const { accesscode } = useParams();
   //   post to backend
   useEffect(() => {
     requestActivation();
-  }, [verificationtoken]);
+  }, [accesscode]);
 
   const requestActivation = async () => {
     try {
-      const { data } = await axios.post("/forgot-password", verificationtoken);
+      const { data } = await axios.post("/user/accessaccount/${accesscode}", accesscode);
       toast.success("successfully logged in, welcome to Oga Landlord");
       setAuth(data);
       localStorage.setItem("auth", JSON.stringify(data));

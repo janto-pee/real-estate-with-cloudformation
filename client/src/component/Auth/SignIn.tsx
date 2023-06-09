@@ -17,55 +17,28 @@ export default function SignIn({ setauthModal }: signinprops) {
 
   const navigate = useNavigate();
 
-  // const handleSubmit = async (e: FormEvent) => {
-  //   try {
-  //     e.preventDefault();
-  //     setLoading(true);
-  //       const { data } = await axios.post(`/session`, {
-  //         email: userEmail,
-  //         password: userPassword,
-  //       });
-  //       const response = data.json()
-  //       setAuth(data);
-  //       localStorage.setItem("auth", JSON.stringify(data));
-  //       toast.success("Login Successful");
-  //       console.log(response)
-  //       setLoading(false);
-  //       navigate("/");
-  //       return;
-  //   } catch (error: any) {
-  //     setLoading(false);
-  //     toast.error(error.message);
-  //     return error;
-  //   }
-  // };
   const handleSubmit = async (e: FormEvent) => {
     try {
       e.preventDefault();
       setLoading(true);
-      const data = await fetch("https://realance-com-ng.onrender.com/api/session", {
-        method: "POST",
-        body: JSON.stringify({
+        const { data } = await axios.post(`https://realance-com-ng.onrender.com/api/session`, {
           email: userEmail,
           password: userPassword,
-        }),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
-      const response = await data.json();
-      toast.success("Login Successful");
-      console.log(response);
-      setLoading(false);
-      return response;
+        });
+        const response = data.json()
+        setAuth(data);
+        localStorage.setItem("auth", JSON.stringify(data));
+        toast.success("Login Successful");
+        console.log(response)
+        setLoading(false);
+        navigate("/");
+        return;
     } catch (error: any) {
       setLoading(false);
       toast.error(error.message);
       return error;
     }
   };
-
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">

@@ -16,8 +16,12 @@ export default function Activation() {
 
   const requestActivation = async () => {
     try {
-      const { data } = await axios.post(`/verify/${verificationtoken}`, verificationtoken);
-      toast.success("successfully logged in, welcome to Oga Landlord");
+      const { data } = await axios.post(`/verify`, {verificationtoken});
+
+      if(data.error){
+        return toast.error(data.error)
+      }
+      toast.success("successfully logged in, welcome to realance");
       setAuth(data);
       localStorage.setItem("auth", JSON.stringify(data));
       navigate("/");

@@ -17,6 +17,7 @@ import { requireUser } from "../middleware/requireUser";
 import { validateResource } from "../middleware/validateResources";
 import {
   accessForgotPasswordSchema,
+  createUserSchema,
   forgotPasswordSchema,
   publicProfileSchema,
   updateForgotPasswordSchema,
@@ -52,7 +53,7 @@ const router = express.Router();
  *      400:
  *        description: Bad request
  */
-router.post("/api/user", createUserHandler);
+router.post("/api/user", validateResource(createUserSchema), createUserHandler);
 
 /**
  * @openapi

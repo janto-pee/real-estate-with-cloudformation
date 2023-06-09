@@ -47,7 +47,7 @@ function App() {
               element={<Activation />}
             />
             <Route
-              path="/auth/forgot-password/:token"
+              path="/api/user/accessaccount/:accesscode"
               element={<Accessing />}
             />
 

@@ -2,7 +2,6 @@ import axios from "axios";
 import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/auth";
 
 interface registerprop {
   setauthModal: any;
@@ -18,32 +17,26 @@ export default function Register({ setauthModal }: registerprop) {
   });
   const [loading, setLoading] = useState(false);
 
-  const { auth, setAuth } = useAuth();
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     try {
       console.log(registerData);
-      if (registerData.email !== "" && registerData.lastname !== "") {
-        e.preventDefault();
-        setLoading(true);
-        const { data } = await axios.post(`/user`, {
-          ...registerData,
-        });
-        console.log(data, auth);
-        setAuth(data);
-        toast.success("user successfully resgistered");
-        setLoading(false);
-        navigate("/");
-        return registerData;
-      }
-
-      return `Enter email and password`;
+      e.preventDefault();
+      setLoading(true);
+      const response = await axios.post(
+        `https://realance-com-ng.onrender.com/api/user`,
+        registerData
+      );
+      await response.data;
+      toast.success("user successfully resgistered");
+      setLoading(false);
+      navigate("/");
+      return registerData;
     } catch (error: any) {
       setLoading(false);
       console.log(error);
-      toast.error(error.message);
+      toast.error(error.response.data);
       return error;
     }
   };
