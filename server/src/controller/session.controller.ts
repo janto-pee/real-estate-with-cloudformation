@@ -9,7 +9,6 @@ import { signJwt, verifyJwt } from "../utils/jwt";
 import { get, omit } from "lodash";
 import { CreateSessionInput } from "../schema/session.schema";
 
-
 export async function createSessionHandler(
   req: Request<{}, {}, CreateSessionInput>,
   res: Response
@@ -18,17 +17,19 @@ export async function createSessionHandler(
   const userAgent = req.get("userAgent");
   try {
     const user = await findUserByEmail(email);
+
     if (!user) {
       return res.status(400).send(`email or password incorrect`);
     }
-    if (!user.verified) {
-      return res.status(400).send(`user not verified`);
-    }
-
     const isValid = await user.comparePassword(password);
+
     if (!isValid) {
       return res.status(400).send(`email or password incorrect`);
     }
+
+    // if (!user.verified) {
+    //   return res.status(400).send(`user not verified`);
+    // }
 
     // const body
     const session = await createSession({
@@ -43,7 +44,9 @@ export async function createSessionHandler(
       expiresIn: "1y",
     });
 
-    const response = { accessToken, refreshToken };
+    const signeduser = omit(user.toJSON(), "password")
+
+    const response = { signeduser, accessToken, refreshToken };
     res.status(200).json({ data: response });
   } catch (error: any) {
     return res.status(400).send(error);

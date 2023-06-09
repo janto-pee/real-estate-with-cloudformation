@@ -26,16 +26,17 @@ export default function SignIn({ setauthModal }: signinprops) {
           password: userPassword,
         });
         const response = data.json()
-        setAuth(data);
-        localStorage.setItem("auth", JSON.stringify(data));
+        // setAuth(data);
+        // localStorage.setItem("auth", JSON.stringify(data));
         toast.success("Login Successful");
         console.log(response)
         setLoading(false);
-        navigate("/");
+        // navigate("/");
         return;
     } catch (error: any) {
+      console.log(error)
       setLoading(false);
-      toast.error(error.message);
+      toast.error(error.response.data[0].message);
       return error;
     }
   };
