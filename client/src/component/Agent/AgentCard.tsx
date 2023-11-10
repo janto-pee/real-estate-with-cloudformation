@@ -49,6 +49,7 @@ export default function AgentCard({
         </div>
       ) : (
         <div className="flex items-start gap-4 md:gap-6 bg-white w-full my-4 p-6">
+          <Link to={`/realtor/${item.slug}`}>
           <div className="basis-[40%]">
             <img
               src={cardImg}
@@ -97,6 +98,7 @@ export default function AgentCard({
             </button>
           </div>
           </div>
+          </Link>
         </div>
       )}
     </div>

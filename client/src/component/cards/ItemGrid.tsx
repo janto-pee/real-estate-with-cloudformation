@@ -1,5 +1,5 @@
 import { Pagination } from "..";
-import ItemGridCard from "../Profile/ItemGridCard";
+import ItemGridCard from "./ItemGridCard";
 
 const products = [
   {
@@ -95,14 +95,16 @@ export default function ItemGrid({
   return (
     <div className="bg-gray-100">
       <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:max-w-7xl lg:px-8 text-center">
-        <h2 className={`text-2xl md:text-3xl lg:text-4xl  tracking-tight text-gray-900 ${headerclass}`}>
+        <h2
+          className={`text-2xl md:text-3xl lg:text-4xl  tracking-tight text-gray-900 ${headerclass}`}
+        >
           {itemheader ? itemheader : "Properties for Sale"}
         </h2>
 
         <div className="mt-8 lg:mt-12 grid grid-cols-1 gap-x-6 gap-y-10 pb-8 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {products.map((product) => (
             <ItemGridCard
-            key={product.id}
+              key={product.id}
               auth={auth}
               product={product}
               edit={edit}

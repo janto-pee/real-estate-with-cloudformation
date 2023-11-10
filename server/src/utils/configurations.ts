@@ -9,3 +9,5 @@ const awsConfig = {
 };
 
 export const AWSSES = new SES(awsConfig);
+export const AWSS3 = new SES(awsConfig);
+

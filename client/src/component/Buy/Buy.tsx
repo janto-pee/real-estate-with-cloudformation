@@ -1,5 +1,7 @@
 import { Pagination } from "..";
-import ItemGridCard from "../Profile/ItemGridCard";
+import { useEffect, useState } from "react";
+import ItemGridCard from "../cards/ItemGridCard";
+import axios from "axios";
 
 const products = [
   {
@@ -11,6 +13,7 @@ const products = [
     imageAlt: "Front of men's Basic Tee in black.",
     price: "$35",
     color: "Black",
+    slug: "xyz",
   },
   {
     id: 2,
@@ -21,6 +24,7 @@ const products = [
     imageAlt: "Front of men's Basic Tee in black.",
     price: "$35",
     color: "Black",
+    slug: "xyz",
   },
   {
     id: 3,
@@ -31,6 +35,7 @@ const products = [
     imageAlt: "Front of men's Basic Tee in black.",
     price: "$35",
     color: "Black",
+    slug: "xyz",
   },
 
   {
@@ -42,6 +47,7 @@ const products = [
     imageAlt: "Front of men's Basic Tee in black.",
     price: "$35",
     color: "Black",
+    slug: "xyz",
   },
 
   {
@@ -53,6 +59,7 @@ const products = [
     imageAlt: "Front of men's Basic Tee in black.",
     price: "$35",
     color: "Black",
+    slug: "xyz",
   },
 
   {
@@ -64,6 +71,7 @@ const products = [
     imageAlt: "Front of men's Basic Tee in black.",
     price: "$35",
     color: "Black",
+    slug: "xyz",
   },
   // More products...
 ];
@@ -87,6 +95,30 @@ export default function Buy({
   setDeleteHouse,
   imgheight,
 }: ItemGridInterface) {
+  const [loading, setLoading] = useState(false);
+  const [properties, setProperties] = useState(products);
+
+  useEffect(() => {
+    fetchProperties();
+  }, []);
+
+  const fetchProperties = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `https://realance-com-ng.onrender.com/api/property`
+      );
+      const data = await response.data;
+      console.log(data.propertyForRent);
+      setProperties(products);
+      setLoading(false);
+      return data;
+    } catch (error: any) {
+      setLoading(false);
+      return error;
+    }
+  };
+
   return (
     <div className="bg-gray-100">
       <div className="mx-auto max-w-2xl px-4 py-8 sm:px-6 lg:max-w-7xl lg:px-8">
@@ -95,10 +127,12 @@ export default function Buy({
         >
           For Sale
         </h2>
-        <p className="mt-8 mb-2 lg:mt-12">52 Properties</p>
+        <p className="mt-8 mb-2 lg:mt-12">
+          {loading ? "loading..." : "52 Properties"}
+        </p>
 
         <div className="  grid grid-cols-1 gap-x-6 gap-y-10 pb-8 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {products.map((product) => (
+          {properties.map((product) => (
             <ItemGridCard
               key={product.id}
               auth={auth}

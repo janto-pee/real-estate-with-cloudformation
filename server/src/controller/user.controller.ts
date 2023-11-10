@@ -232,7 +232,13 @@ export async function getCurrentUser(req: Request, res: Response) {
     if (!data) {
       return res.status(400).json({ error: "unauthorised" });
     }
-    const payload = omit(data.toJSON(), "password", "passwordResetCode");
+    const payload = omit(
+      data.toJSON(),
+      "password",
+      "passwordResetCode",
+      "__v",
+      "role"
+    );
     return res.status(200).json({ data: payload });
   } catch (error: any) {
     res.status(400).json({ data: error.message });

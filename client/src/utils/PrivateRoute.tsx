@@ -5,27 +5,29 @@ import { Outlet } from "react-router-dom";
 
 export default function PrivateRoute() {
   const { auth } = useAuth();
-  const [getUser, setGetUser] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const loggedIn= auth?.accesstoken !== "" &&
+    auth?.refreshtoken !== "";
 
   useEffect(() => {
-    if (auth?.user) {
+    if (loggedIn) {
       getCurrentUser();
     }
   }, [auth]);
 
   const getCurrentUser = async () => {
     try {
-      const { data } = await axios.get("/current-user", {
+      const { data } = await axios.get("https://realance-com-ng.onrender.com/api/user/current-user", {
         headers: {
           Authorization: auth?.accesstoken,
         },
       });
-      setGetUser(true);
+      setLoading(true);
       console.log(data);
     } catch (error) {
-      setGetUser(false);
+      setLoading(false);
       return error;
     }
   };
-  return <div>{getUser ? <Outlet /> : ""}</div>;
+  return <div>{loading ? <Outlet /> : ""}</div>;
 }

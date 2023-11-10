@@ -6,6 +6,7 @@ import {
   Auth,
   BuyPage,
   Contact,
+  Dashboard,
   FindRealtors,
   ForgotPasswordPage,
   Home,
@@ -38,9 +39,8 @@ function App() {
             />
             <Route path="/forgot-password" element={<ForgotPasswordPage />} />
             <Route path="/auth" element={<Auth />} />
-            <Route path="/" element={<PrivateRoute />} />
-            {/* put allprivate route here */}
-            <Route />
+            <Route path="/" element={<PrivateRoute />}></Route>
+            <Route path="/dashboard" element={<Dashboard />} />
 
             <Route
               path="/auth/activate/:verificationtoken"

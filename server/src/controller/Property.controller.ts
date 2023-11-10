@@ -15,6 +15,64 @@ import {
 import { findUserById, updateUser } from "../service/user.service";
 import slugify from "slugify";
 import { nanoid } from "nanoid";
+import { AWSS3 } from "../utils/configurations";
+
+export async function uploadPropertyImageHandler(req: Request, res: Response) {
+  try {
+    const userId = res.locals.user;
+    const { image } = req.body;
+    if (!userId) {
+      return res.status(400).json({ error: "unauthorised user" });
+    }
+
+    const base64Image = Buffer.from(
+      image.replace(/^data:image\/\w+;base64,/, ""),
+      "base64"
+    );
+    const type = image.split(";")[0].split("/")[1];
+
+    // image params
+    const params = {
+      Bucket: "realist-app-udemy-course-bucket",
+      Key: `${nanoid()}.${type}`,
+      Body: base64Image,
+      ACL: "public-read",
+      ContentEncoding: "base64",
+      ContentType: `image/${type}`,
+    };
+
+    //  AWSS3.upload(params, (err, data) => {
+    //   if (err) {
+    //     console.log(err);
+    //     res.sendStatus(400);
+    //   } else {
+    //     // console.log(data);
+    //     res.send(data);
+    //   })
+    const response = "successfuly uploaded";
+    return res.status(200).send({ data: response });
+  } catch (error) {
+    return error;
+  }
+}
+
+export async function deletePropertyImageHandler(req: Request, res: Response) {
+  try {
+    const { Key, Bucket } = req.body;
+
+    // AWSS3.deleteObject({ Bucket, Key }, (err, data) => {
+    //   if (err) {
+    //     console.log(err);
+    //     res.sendStatus(400);
+    //   } else {
+    //     res.send({ ok: true });
+    //   }
+    // });
+    return res.status(200).send({ data: "image successfully deleted" });
+  } catch (error) {
+    return error;
+  }
+}
 
 export async function createPropertyHandler(req: Request, res: Response) {
   try {

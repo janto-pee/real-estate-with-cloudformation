@@ -24,7 +24,7 @@ interface signedUser {
 }
 
 interface AuthInterface {
-  user: signedUser;
+  signeduser: signedUser;
   accesstoken: string;
   refreshtoken: string;
 }
@@ -35,7 +35,17 @@ interface AuthContextInterface {
 
 const defaultState = {
   auth: {
-    user: {},
+    signeduser: {
+      _id: null,
+      username: null,
+      firstname: null,
+      lastname: null,
+      email: null,
+      address: null,
+      company: null,
+      verified: false,
+      createdAt: null,
+    },
     accesstoken: "",
     refreshtoken: "",
   },
@@ -49,7 +59,7 @@ const AuthContext = createContext<AuthContextInterface>(defaultState);
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [auth, setAuth] = useState<AuthInterface>({
-    user: {
+    signeduser: {
       _id: null,
       username: null,
       firstname: null,
@@ -109,7 +119,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       setAuth(JSON.parse(LS));
     }
   }, []);
-
+  const { signeduser } = auth;
+  console.log("context", signeduser);
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
       {children}

@@ -1,5 +1,7 @@
+import axios from "axios";
 import PDRelated from "../PropertyDetail/PDRelated";
 import AgentCard from "./AgentCard";
+import { useEffect, useState } from "react";
 
 const product = {
   name: "Basic Tee 6-Pack",
@@ -55,6 +57,29 @@ const product = {
 };
 
 export default function Agent() {
+  const [loading, setLoading] = useState(false);
+  const [properties, setProperties] = useState(product.breadcrumbs);
+
+  useEffect(() => {
+    fetchProperties();
+  }, []);
+
+  const fetchProperties = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `https://realance-com-ng.onrender.com/api/property`
+      );
+      const data = await response.data;
+      console.log(data.propertyForRent);
+      setProperties(product.breadcrumbs);
+      setLoading(false);
+      return data;
+    } catch (error: any) {
+      setLoading(false);
+      return error;
+    }
+  };
   return (
     <div className="bg-[#f7f7f8]">
       <div className="pt-6">
@@ -63,8 +88,11 @@ export default function Agent() {
             <h1 className="text-2xl font-[400] tracking-tight text-gray-900 sm:text-3xl">
               Agents
             </h1>
+            <p className="my-2">
+              {loading ? "loadingproperties" : "52 properties"}
+            </p>
             <div>
-              {product.breadcrumbs.map((items, index) => (
+              {properties.map((items, index) => (
                 <AgentCard item={items} key={index} />
               ))}
             </div>

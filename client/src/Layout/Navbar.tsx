@@ -19,17 +19,38 @@ export default function Navbar() {
   const navigate = useNavigate();
   // conditionally show auth token
   const { auth, setAuth } = useAuth();
+  console.log(auth, auth?.refreshtoken);
   const loggedIn =
-    auth?.user !== null &&
+    auth?.signeduser?._id !== null &&
     auth?.accesstoken !== "" &&
     auth?.refreshtoken !== "";
 
   const logout = () => {
-    setAuth({ user: null, accesstoken: "", refreshtoken: "" });
+    setAuth({
+      signeduser: {
+        _id: null,
+        username: null,
+        firstname: null,
+        lastname: null,
+        email: null,
+        address: null,
+        company: null,
+        verified: false,
+        createdAt: null,
+      },
+      accesstoken: "",
+      refreshtoken: "",
+    });
     localStorage.removeItem("auth");
-    navigate("/");
+    navigate("/auth");
   };
 
+  const createListing = async () => {
+    if (loggedIn) {
+      navigate("/profile-page");
+    }
+    navigate("/auth");
+  };
 
   return (
     <Disclosure as="nav" className="bg-[#0C134F]">
@@ -84,16 +105,23 @@ export default function Navbar() {
                 {/* Profile dropdown */}
                 {loggedIn ? (
                   <Menu as="div" className="relative ml-3">
-                    <div>
+                    <div className="flex gap-4 items-center">
                       <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                        <span className="sr-only">Open user menu</span>
+                        {/* <span className="sr-only">Open user menu</span> */}
                         <img
                           className="h-8 w-8 rounded-full"
                           src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                           alt=""
                         />
                       </Menu.Button>
+                      <button
+                        className="bg-gray-200 text-gray-00 block rounded-md px-2 py-1"
+                        onClick={logout}
+                      >
+                        Logout
+                      </button>
                     </div>
+                    
                     <Transition
                       as={Fragment}
                       enter="transition ease-out duration-100"
@@ -147,11 +175,12 @@ export default function Navbar() {
                     </Transition>
                   </Menu>
                 ) : (
-                  <NavLink to="/auth">
-                    <button className="bg-violet-500 text-gray-100 block rounded-md px-8 py-2 text-base font-medium">
-                      Create Listing
-                    </button>
-                  </NavLink>
+                  <button
+                    className="bg-violet-500 text-gray-100 block rounded-md px-8 py-2 text-base font-medium"
+                    onClick={createListing}
+                  >
+                    Create Listing
+                  </button>
                 )}
               </div>
             </div>
@@ -179,14 +208,14 @@ export default function Navbar() {
                 {loggedIn ? (
                   <div className="flex gap-2 items-center">
                     <div>
-                      <span>{auth?.user}</span>
+                      <span>{auth?.signeduser?.username}</span>
                       <img
                         className="h-8 w-8 rounded-full"
                         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                         alt=""
                       />
                       <button
-                        className="bg-violet-500 text-gray-300 block rounded-md px-4 py-2"
+                        className="bg-gray-200 text-gray-00 block rounded-md px-4 py-2"
                         onClick={logout}
                       >
                         Logout
@@ -194,11 +223,12 @@ export default function Navbar() {
                     </div>
                   </div>
                 ) : (
-                  <NavLink to="/auth">
-                    <button className="bg-blue-500 text-gray-300 block rounded-md px-3 py-2 font-medium ">
-                      Create Listing
-                    </button>
-                  </NavLink>
+                  <button
+                    className="bg-blue-500 text-gray-300 block rounded-md px-3 py-2 font-medium "
+                    onClick={createListing}
+                  >
+                    Create Listing
+                  </button>
                 )}
               </div>
             </div>

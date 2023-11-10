@@ -29,6 +29,7 @@ export interface PropertyDocument extends PropertyInput, mongoose.Document {
   createdAt: Date;
   updatedAt: Date;
   postedby: ["_id"];
+  featured: boolean;
 }
 
 const PropertySchema = new mongoose.Schema(
@@ -83,6 +84,10 @@ const PropertySchema = new mongoose.Schema(
     view: {
       type: Number,
       default: 0,
+    },
+    featured: {
+      type: Boolean,
+      default: false,
     },
   },
   {

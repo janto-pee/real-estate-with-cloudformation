@@ -9,17 +9,19 @@ import PropertyDetail from "./PropertyDetail";
 import Accessing from "./Accessing";
 import Activation from "./Activation";
 import ForgotPasswordPage from "./ForgotPasswordPage";
+import Dashboard from "./Dashboard";
 
 export {
-    Auth,
-    BuyPage,
-    Contact,
-    FindRealtors,
-    Home,
-    Rent,
-    Sell,
-    PropertyDetail,
-    Accessing,
-    Activation,
-    ForgotPasswordPage
-}
+  Auth,
+  BuyPage,
+  Contact,
+  FindRealtors,
+  Home,
+  Rent,
+  Sell,
+  PropertyDetail,
+  Accessing,
+  Activation,
+  ForgotPasswordPage,
+  Dashboard,
+};

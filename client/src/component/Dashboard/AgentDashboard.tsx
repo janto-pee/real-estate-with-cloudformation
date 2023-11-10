@@ -1,60 +1,18 @@
-import { useEffect, useState } from "react";
 import { AiFillStar, AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
 import { CgProfile } from "react-icons/cg";
 import { Comment } from "..";
 import cardImg from "/img/card-img3.jpg";
 import PDContact from "../PropertyDetail/PDContact";
-import PDRelated from "../PropertyDetail/PDRelated";
 import AgentCard from "../Agent/AgentCard";
-import AgentListItem from "./AgentListItem";
-import { useParams } from "react-router-dom";
-import axios from "axios";
+import AgentEdit from "./AgentEdit";
+import { useState } from "react";
+import ListingForm from "../Form/ListingForm";
 
-export default function AgentDetails() {
-  const params = useParams();
-  const slug = params.slug;
-
-  const products = {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-    slug: "xyz",
-  };
-
-  const [loading, setLoading] = useState(false);
-  const [property, setProperty] = useState(products);
-  // const [related, setRelated] = useState(products);
-
-  useEffect(() => {
-    fetchProperties();
-  }, []);
-
-  const fetchProperties = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(
-        `https://realance-com-ng.onrender.com/api/property/${slug}`
-      );
-      const data = await response.data;
-      console.log(data.propertyForRent);
-      setProperty(products);
-      setProperty(products);
-      setLoading(false);
-      return data;
-    } catch (error: any) {
-      setLoading(false);
-      return error;
-    }
-  };
+export default function AgentDashboard() {
+  const [showListing, setShowListing] = useState("Listing");
   return (
     <div className="bg-[#f7f8f9]">
       <div className="pt-6">
-        {loading ? "loading" : property.name}
         <div className="max-w-2xl mx-auto lg:max-w-7xl px-8">
           <AgentCard item={"xyz"} itemdetail />
         </div>
@@ -84,8 +42,37 @@ export default function AgentDetails() {
               </p>
             </div>
 
+            <div className="flex gap-4 items-center">
+              <button
+                type="submit"
+                onClick={() => {
+                  setShowListing("Listing");
+                }}
+                className={`block w-full rounded-md  px-3 py-4 text-center text-lg font-semibold text-white shadow-sm  ${
+                  showListing == "Listing"
+                    ? "bg-indigo-600 text-white"
+                    : "border border-indigo-600 text-indigo-500"
+                } `}
+              >
+                send message
+              </button>
+              <button
+                type="submit"
+                onClick={() => {
+                  setShowListing("CreateProperty");
+                }}
+                className={`block w-full rounded-md px-3 py-4 text-center text-lg font-semibold text-white shadow-sm  ${
+                  showListing == "CreateProperty"
+                    ? "bg-indigo-600 text-white"
+                    : "border border-indigo-600 text-indigo-500"
+                }  `}
+              >
+                send message
+              </button>
+            </div>
+
             <div className="mb-4">
-              <AgentListItem />
+              {showListing == "Listing" ? <AgentEdit /> : <ListingForm />}
             </div>
 
             {/* Property Detail */}
@@ -156,10 +143,6 @@ export default function AgentDetails() {
               </div>
               <div className="my-6">
                 <PDContact />
-                <div className="mt-8">
-                  <h1 className="border-b py-4 text-xl">Related Field</h1>
-                  <PDRelated />
-                </div>
               </div>
             </div>
           </div>

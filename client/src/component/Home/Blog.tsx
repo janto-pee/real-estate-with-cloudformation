@@ -1,4 +1,8 @@
-const posts = [
+import axios from "axios";
+import { useState, useEffect } from "react";
+
+
+const initialposts = [
   {
     id: 1,
     title: 'Boost your conversion rate',
@@ -56,14 +60,37 @@ const posts = [
   // More posts...
 
 export default function Blog() {
+  const [loading, setLoading] = useState(false)
+  const [posts, setPosts] = useState(initialposts)
+  
+  useEffect(() => {
+    fetchProperties();
+  }, []);
+
+  const fetchProperties = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `https://realance-com-ng.onrender.com/api/property`
+      );
+      const data = await response.data;
+      console.log(data.propertyForRent)
+      setPosts(posts);
+      setLoading(false);
+      return data;
+    } catch (error: any) {
+      setLoading(false);
+      return error;
+    }
+  };
   return (
     <div className="bg-white pt-16">
       <div className="mx-auto max-w-7xl px-6 lg:px-8 flex flex-col items-center">
         <div className="mx-auto max-w-2xl lg:mx-0 text-center">
           <h2 className="text-4xl tracking-tight sm:text-4xl">From the blog</h2>
-          {/* <p className="mt-2 text-lg hidden md:flex leading-8 text-gray-600">
-            Learn about the happenings in the real estate industry around the world
-          </p> */}
+          <p className="mt-2 text-lg hidden md:flex leading-8 text-gray-600">
+            {loading && 'Loading...'}
+          </p>
         </div>
         <div className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-4 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           {posts.map((post) => (
