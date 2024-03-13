@@ -96,8 +96,7 @@ Here is the layer:
 - use component blocks from `src/templates/*`
 - use atomic components from `src/*`
 
-
-##🎉 Features
+## 🎉Features
 
 Developer experience first:
 
