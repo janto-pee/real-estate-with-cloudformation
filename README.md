@@ -34,9 +34,6 @@
 Oga Landlord gracefully presents property listing information to website visitors, collects inquiries/leads, and facilitates property owners by making property management easier & affordable. It provides design variations, a high level of customizability, and advanced functionality
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system. It provides design variations, a high level of customizability, and advanced functionality
-
-### Installation
 Run the following command on your local environment:
 
 ```
@@ -81,7 +78,7 @@ Open http://localhost:3000 with your favorite browser to see your project. For y
 └── tsconfig.json        # TypeScript configuration
 ```
 
-### Break down into end to end tests
+### Customization
 You can easily configure the theme. Please change the following file:
 
 - `public/apple-touch-icon.png`, `public/favicon.ico`, `public/favicon-16x16.png` and `public/favicon-32x32.png`: your favicon, you can generate from https://favicon.io/favicon-converter/
@@ -99,7 +96,8 @@ Here is the layer:
 - use component blocks from `src/templates/*`
 - use atomic components from `src/*`
 
-### And coding style tests
+## 🎈 Build & Deploy <a name="usage"></a>
+How to deploy to popular hosting sites
 You can see the results locally in production mode with:
 
 ```
@@ -117,8 +115,7 @@ npm run build-prod
 
 Now, your theme is ready to be deployed. All generated files are located at `out` folder, which you can deploy with any hosting service.
 
-## 🎈 Usage <a name="usage"></a>
-How to deploy to popular hosting sites
+
 
 ## 🚀 Deploy to Vercel <a name = "deployment"></a>
 Clone this repository on own GitHub account and deploy to Netlify:
