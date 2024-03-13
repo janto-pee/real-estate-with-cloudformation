@@ -36,57 +36,99 @@ Oga Landlord gracefully presents property listing information to website visitor
 ## 🏁 Getting Started <a name = "getting_started"></a>
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system. It provides design variations, a high level of customizability, and advanced functionality
 
-### Prerequisites
-What things you need to install the software and how to install them.
+### Installation
+Run the following command on your local environment:
 
 ```
-Give examples
+git clone --depth=1 https://github.com/ixartz/Next-JS-Landing-Page-Starter-Template.git my-project-name
+cd my-project-name
+npm install
 ```
 
-### Installing
-A step by step series of examples that tell you how to get a development env running.
-
-Say what the step will be
+Then, you can run locally in development mode with live reload:
 
 ```
-Give the example
+npm run dev
 ```
 
-And repeat
+Open http://localhost:3000 with your favorite browser to see your project. For your information, Next JS need to take some time to compile the project for your first time.
+
+
+<!-- ## 🔧 Running the tests <a name = "tests"></a> -->
+## 🔧 Project Structure <a name = "tests"></a>
 
 ```
-until finished
+.
+├── README.md            # README file
+├── next.config.js       # Next JS configuration
+├── public               # Public folder
+│   └── assets
+│       └── images       # Image used by default template
+├── src
+│   ├── background       # Atomic background component
+│   ├── button           # Atomic button component
+│   ├── cta              # Atomic cta component
+│   ├── feature          # Atomic feature component
+│   ├── footer           # Atomic footer component
+│   ├── hero             # Atomic hero component
+│   ├── layout           # Atomic layout component
+│   ├── navigation       # Atomic navigation component
+│   ├── pages            # Next JS pages
+│   ├── styles           # PostCSS style folder with Tailwind
+│   ├── templates        # Default template
+│   └── utils            # Utility folder
+├── tailwind.config.js   # Tailwind CSS configuration
+└── tsconfig.json        # TypeScript configuration
 ```
-
-End with an example of getting some data out of the system or using it for a little demo.
-
-## 🔧 Running the tests <a name = "tests"></a>
-Explain how to run the automated tests for this system.
 
 ### Break down into end to end tests
-Explain what these tests test and why
+You can easily configure the theme. Please change the following file:
 
-```
-Give an example
-```
+- `public/apple-touch-icon.png`, `public/favicon.ico`, `public/favicon-16x16.png` and `public/favicon-32x32.png`: your favicon, you can generate from https://favicon.io/favicon-converter/
+- `src/styles/global.css`: your CSS file using Tailwind CSS
+- `utils/AppConfig.ts`: configuration file
+- `src/pages/index.tsx`: the index page of the theme that uses the `Base` component
+- `src/template/Base.tsx`: the `Base` component using component blocks
+- `src/templates/*`: the list of component blocks
+- `src/*`: other folders in src are the atomic components used by components blocks
+
+Here is the layer:
+
+- the entry point: `index.tsx` in `src/pages`
+- the `Base` template: `Base.tsx` in `src/templates`
+- use component blocks from `src/templates/*`
+- use atomic components from `src/*`
 
 ### And coding style tests
-Explain what these tests test and why
+You can see the results locally in production mode with:
 
 ```
-Give an example
+$ npm run build
+$ npm run start
 ```
+
+The generated HTML and CSS files are minified (built-in feature from Next js). It will also removed unused CSS from [Tailwind CSS](https://tailwindcss.com).
+
+You can create an optimized production build with:
+
+```
+npm run build-prod
+```
+
+Now, your theme is ready to be deployed. All generated files are located at `out` folder, which you can deploy with any hosting service.
 
 ## 🎈 Usage <a name="usage"></a>
-Add notes about how to use the system.
+How to deploy to popular hosting sites
 
-## 🚀 Deployment <a name = "deployment"></a>
-Add additional notes about how to deploy this on a live system.
+## 🚀 Deploy to Vercel <a name = "deployment"></a>
+Clone this repository on own GitHub account and deploy to Netlify:
+
+[![Netlify Deploy button](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/ixartz/Next-JS-Landing-Page-Starter-Template)
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 - [MongoDB](https://www.mongodb.com/) - Database
 - [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
+- [React](https://reactjs.org/) - Web Framework
 - [NodeJs](https://nodejs.org/en/) - Server Environment
 
 ## ✍️ Authors <a name = "authors"></a>
