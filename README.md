@@ -78,7 +78,7 @@ Open http://localhost:3000 with your favorite browser to see your project. For y
 └── tsconfig.json        # TypeScript configuration
 ```
 
-### ✅Customization
+## ✅Customization
 You can easily configure the theme. Please change the following file:
 
 - `public/apple-touch-icon.png`, `public/favicon.ico`, `public/favicon-16x16.png` and `public/favicon-32x32.png`: your favicon, you can generate from https://favicon.io/favicon-converter/
@@ -95,6 +95,27 @@ Here is the layer:
 - the `Base` template: `Base.tsx` in `src/templates`
 - use component blocks from `src/templates/*`
 - use atomic components from `src/*`
+
+
+##🎉 Features
+
+Developer experience first:
+
+- 🔥 [Next.js](https://nextjs.org) for Static Site Generator
+- 🎨 Integrate with [Tailwind CSS](https://tailwindcss.com)
+- 💅 PostCSS for processing Tailwind CSS and integrated to `styled-jsx`
+- 🎉 Type checking [TypeScript](https://www.typescriptlang.org)
+- ✅ Strict Mode for TypeScript and React 18
+- ✏️ Linter with [ESLint](https://eslint.org) (default NextJS, NextJS Core Web Vitals and Airbnb configuration)
+- 🛠 Code Formatter with [Prettier](https://prettier.io)
+- 🦊 Husky for Git Hooks
+- 🚫 Lint-staged for running linters on Git staged files
+- 🗂 VSCode configuration: Debug, Settings, Tasks and extension for PostCSS, ESLint, Prettier, TypeScript
+- 🤖 SEO metadata, JSON-LD and Open Graph tags with Next SEO
+- ⚙️ [Bundler Analyzer](https://www.npmjs.com/package/@next/bundle-analyzer)
+- 🖱️ One click deployment with Netlify (or manual deployment to any hosting services)
+- 🌈 Include a FREE theme
+- 💯 Maximize lighthouse score
 
 ## 🎈 Build & Deploy <a name="usage"></a>
 How to deploy to popular hosting sites
