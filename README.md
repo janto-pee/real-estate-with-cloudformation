@@ -37,8 +37,8 @@ Oga Landlord gracefully presents property listing information to website visitor
 Run the following command on your local environment:
 
 ```
-git clone --depth=1 https://github.com/ixartz/Next-JS-Landing-Page-Starter-Template.git my-project-name
-cd my-project-name
+git clone --depth=1 https://github.com/janto-pee/node.js-cloudformation.git nodejs-cloudformation
+cd nodejs-cloudformtion
 npm install
 ```
 
