@@ -4,20 +4,20 @@
 </p>
 
 <h3 align="center">cloudformation with real estate</h3>
-
-<div align="center">
+<p align="center"> Oga Landlord is a Typescript, Next.js project for real estate agencies.    <br> 
+</p>
+<!-- <div align="center">
 
   [![Status](https://img.shields.io/badge/status-active-success.svg)]() 
   [![GitHub Issues](https://img.shields.io/github/issues/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/issues)
   [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/kylelobo/The-Documentation-Compendium.svg)](https://github.com/kylelobo/The-Documentation-Compendium/pulls)
   [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
-</div>
+</div> -->
 
 ---
 
-<p align="center"> Oga Landlord is a Typescript, Next.js project for real estate agencies.    <br> 
-</p>
+
 
 ## 📝 Table of Contents
 - [About](#about)
@@ -32,6 +32,15 @@
 
 ## 🧐 About <a name = "about"></a>
 Oga Landlord gracefully presents property listing information to website visitors, collects inquiries/leads, and facilitates property owners by making property management easier & affordable. It provides design variations, a high level of customizability, and advanced functionality
+
+## 🎉Features
+
+- 🔥 social media integrations
+- 🎨 Analytics
+- 💅 CRM
+- 🎉 Maps
+- ✅ Testimonials
+- ✏️ Virtual Tours
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 Run the following command on your local environment:
@@ -56,26 +65,26 @@ Open http://localhost:3000 with your favorite browser to see your project. For y
 
 ```
 .
-├── README.md            # README file
-├── next.config.js       # Next JS configuration
-├── public               # Public folder
-│   └── assets
-│       └── images       # Image used by default template
+├── README.md            
+├── package.js           
+├── public              
+│   │── assets
+│   └── vite.svg         
 ├── src
-│   ├── background       # Atomic background component
-│   ├── button           # Atomic button component
-│   ├── cta              # Atomic cta component
-│   ├── feature          # Atomic feature component
-│   ├── footer           # Atomic footer component
-│   ├── hero             # Atomic hero component
-│   ├── layout           # Atomic layout component
-│   ├── navigation       # Atomic navigation component
-│   ├── pages            # Next JS pages
-│   ├── styles           # PostCSS style folder with Tailwind
-│   ├── templates        # Default template
-│   └── utils            # Utility folder
-├── tailwind.config.js   # Tailwind CSS configuration
-└── tsconfig.json        # TypeScript configuration
+│   ├── component      
+│   ├── context          
+│   ├── layout       
+│   ├── page            
+│   ├── types          
+│   ├── utils            
+│   ├── App.css         
+│   ├── App.tsx        
+│   ├── config.ts        
+│   ├── index.css      
+│   ├── main.tsx       
+│   └── assets         
+├── tailwind.config.js  
+└── tsconfig.json       
 ```
 
 ## ✅Customization
