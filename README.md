@@ -33,6 +33,15 @@
 ## 🧐 About <a name = "about"></a>
 Oga Landlord gracefully presents property listing information to website visitors, collects inquiries/leads, and facilitates property owners by making property management easier & affordable. It provides design variations, a high level of customizability, and advanced functionality
 
+## 🎉Features
+
+- 🔥 social media integrations
+- 🎨 Analytics
+- 💅 CRM
+- 🎉 Maps
+- ✅ Testimonials
+- ✏️ Virtual Tours
+
 ## 🏁 Getting Started <a name = "getting_started"></a>
 Run the following command on your local environment:
 
